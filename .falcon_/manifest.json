@@ -1,0 +1,60 @@
+{
+  "appName": "Doge阅读",
+  "version": "1.0.0",
+  "appid": "8001771136498003",
+  "icon": "app_icon_test.png",
+  "quickjs": {
+    "version": "20200705",
+    "bigNum": false
+  },
+  "cert": {
+    "app.js.bin": {
+      "size": 3355,
+      "md5": "5d49b8dd1069ee0957bd75d25775a515"
+    },
+    "back-03f62ecb.js.bin": {
+      "size": 1562,
+      "md5": "6c6c6f8c41b55ba1767d617e4a079e0f"
+    },
+    "filemanager.js.bin": {
+      "size": 4376,
+      "md5": "76ab281a6c47cb06473dfe1de64887e0"
+    },
+    "index.js.bin": {
+      "size": 2901,
+      "md5": "a7a56e126a8338f0c5ddc13b6534eb8e"
+    },
+    "images/1973abf6acba1cf149cccab19da1e6f5.png": {
+      "size": 5619,
+      "md5": "9764e4a627893a8f65ad7747984273b3"
+    },
+    "images/36d8aa5c9c5167c039ee7f9585652a67.png": {
+      "size": 716,
+      "md5": "f51a57ccd982b30ca7d404bc0d1bb184"
+    },
+    "images/6299f20683241591d31ade5a7702baa1.png": {
+      "size": 4234,
+      "md5": "c7f6dbcc71b61cd9b5f6bb00aaae5374"
+    },
+    "images/6a2eb561a9b634d8f865d5fd822b5136.png": {
+      "size": 2084,
+      "md5": "52b06ddde0eafb4857d78be1cceb00c1"
+    },
+    "images/6bc56a938378dceb66172c2e90444f54.png": {
+      "size": 2272,
+      "md5": "f21ec023916512c7938a1f6655ca4f7e"
+    },
+    "images/81ac1726dd18b34e4b68c49ae7680a47.png": {
+      "size": 3188,
+      "md5": "a7f753ba202a86a392dc23222c81282b"
+    },
+    "images/cfa3abe8a68835c659f0c5c188825870.png": {
+      "size": 3162,
+      "md5": "bf73948a943a987e6361a8f47cdf6e2e"
+    },
+    "images/dc03d95e3a26ea9eef57f81d8b1b3bce.png": {
+      "size": 4187,
+      "md5": "cb2fd8da679d22439d3cad043d8f3696"
+    }
+  }
+}

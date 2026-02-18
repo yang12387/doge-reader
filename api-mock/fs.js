@@ -7,6 +7,9 @@ class MockDirent {
     isDirectory() {
         return this.type === 'dir';
     }
+    isFile() {
+        return this.type === 'file';
+    }
 }
 
 const mockFileTree = {

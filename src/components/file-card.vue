@@ -1,7 +1,8 @@
 <template>
     <div class="wrapper" @click="$emit('click')">
-        <image class="icon" v-if="node.isDirectory()" :src="require('../assets/folder-icon.png')" />
-        <image class="icon" v-else :src="require('../assets/file-icon.png')" />
+        <image class="icon" :src="node.isDirectory()
+            ? require('../assets/folder-icon.png')
+            : require('../assets/file-icon.png')" />
         <text class="text">{{ node.name }}</text>
     </div>
 </template>
@@ -19,10 +20,10 @@ export default {
 @import "../styles/md-color.less";
 
 .wrapper {
-    height: 29.5vh;
+    height: 30vh;
     background-color: @neutral;
     border-radius: 6vh;
-    padding: 3vh 6vh;
+    padding: 3vh 7vh;
     align-items: center;
     flex-direction: row;
 }
@@ -34,7 +35,7 @@ export default {
 .icon {
     width: 15vh;
     height: 15vh;
-    margin-right: 5vh;
+    margin-right: 6vh;
 }
 
 .text {

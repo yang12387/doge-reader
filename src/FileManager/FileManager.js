@@ -2,24 +2,24 @@ import fs from 'fs';
 
 export default class FileManager {
     constructor(root = "/userdisk/Favorites") {
-        this.pathStack = root.split('/').filter(Boolean);
+        this._stack = root.split('/').filter(Boolean);
+        this.loading = true
         this.nodeList = [];
-        this.handler = null;
-
-        this._refresh();
+        this._version = 0;
     }
 
     get workDir() {
-        return '/' + this.pathStack.join('/');
+        return '/' + this._stack.join('/');
     }
 
     async _refresh() {
-        if (this.handler) {
-            this.handler(null);
-        }
+        const version = ++this._version;
+        this.loading = true;
 
         try {
             const list = await fs.readdir(this.workDir, { withFileTypes: true });
+
+            if (version !== this._version) return;
 
             this.nodeList = list
                 .filter(node =>
@@ -32,13 +32,11 @@ export default class FileManager {
                 });
 
         } catch (e) {
-            console.error(e);
+            if (version !== this._version) return;
             this.nodeList = [];
         }
 
-        if (this.handler) {
-            this.handler(this.nodeList);
-        }
+        this.loading = false;
     }
 
     chooseFile(index) {
@@ -46,7 +44,7 @@ export default class FileManager {
         if (!node) return null;
 
         if (node.isDirectory()) {
-            this.pathStack.push(node.name);
+            this._stack.push(node.name);
             this._refresh();
             return null;
         }
@@ -55,9 +53,9 @@ export default class FileManager {
     }
 
     goBack() {
-        if (this.pathStack.length <= 1) return false;
+        if (this._stack.length <= 1) return false;
 
-        this.pathStack.pop();
+        this._stack.pop();
         this._refresh();
         return true;
     }

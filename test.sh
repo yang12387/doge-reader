@@ -2,7 +2,7 @@
 
 page="$1"
 
-npm run build:prod
+npm run build
 amr_file=$(ls *.amr)
 base_name="${amr_file%%.*}"
 

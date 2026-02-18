@@ -1,16 +1,15 @@
 <template>
-    <div class="bg" style="flex-direction: row;">
+    <div class="container" style="flex-direction: row;">
         <ButtonColumn>
             <IconButton :icon="require('../../assets/back.png')" @click="back" />
             <IconButton :icon="require('../../assets/home.png')" @click="home" />
         </ButtonColumn>
-        <scroller over-scroll="50px" over-fling="50px" class="scroller">
+        <scroller style="flex: 1;" over-scroll="50px" over-fling="50px" class="scroller">
+            <div style="height:1px;" />
             <text class="title">本地文件</text>
-            <div v-if="nodeList === null" class="loading">
-                <text class="loading-text">少女祈祷中...</text>
-            </div>
-            <div v-else class="file-list">
-                <FileCard class="file-card" v-for="(node, index) in nodeList" :key="index" :node="node"
+            <text v-if="manager.loading" class="loading">少女祈祷中...</text>
+            <div style="background-color:yellow;" class="file-list">
+                <FileCard class="file-card" v-for="(node, index) in manager.nodeList" :key="node.name" :node="node"
                     @click="open(index)" />
             </div>
         </scroller>
@@ -22,7 +21,7 @@ import ButtonColumn from "../../components/button-column.vue";
 import FileCard from "../../components/file-card.vue";
 import IconButton from "../../components/icon-button.vue";
 
-import FileManager from "../../FileManger/FileManager.js";
+import FileManager from "../../FileManager/FileManager.js";
 
 export default {
     name: 'filemanager',
@@ -34,8 +33,10 @@ export default {
     data() {
         return {
             manager: new FileManager(),
-            nodeList: null,
         }
+    },
+    mounted() {
+        this.manager._refresh();
     },
     methods: {
         openLink(link) {
@@ -51,21 +52,23 @@ export default {
         },
         open(index) {
             let path = this.manager.chooseFile(index);
-            if (path) { this.openLink(path); }
+
+            if (path) {
+                this.openLink(path);
+            }
         },
         onShow() {
-            this.manager.handler = list => { this.nodeList = list; }
-
             this._backpressed = () => {
                 this.back();
             }
+
             this.$page.$npage.setSupportBack(false);
             this.$page.$npage.on("backpressed", this._backpressed);
         },
         onHide() {
             this.$page.$npage.setSupportBack(true);
             this.$page.$npage.off("backpressed", this._backpressed);
-        }
+        },
     }
 }
 </script>
@@ -83,14 +86,8 @@ export default {
 }
 
 .loading {
-    flex:1;
-    justify-content: center;
-    align-items: center;
-}
-
-.loading-text {
     font-size: 12vh;
-    color: @on-neutral;
-    transform: translateY(20vh);
+    text-align: center;
+    color: @outline;
 }
 </style>

@@ -1,9 +1,9 @@
 {
   "name": "Doge阅读",
-  "appid": "8001771136498003",
+  "appid": "8001145141919811",
   "version": "1.0.0",
   "description": "hello",
-  "icon": "app_icon_test.png",
+  "icon": "app_icon.png",
   "quickjs": {
     "version": "20200705",
     "bigNum": false

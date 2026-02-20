@@ -6,61 +6,78 @@ export default class BookParser {
         this.path = path;
         this.text = '';
         this.chapters = [];
-        this.book = null;
     }
 
     async load() {
-        this.text = await fs.readFile(this.path);
-        this._parseChapters();
-        this.book = new Book(this.text, this.chapters);
-        return this.book;
+        this.text = await fs.readFile(this.path, 'utf-8');
+        this.text = this.text.replace(/\r\n/g, '\n');
+        this._parse();
+        return new Book(this.text, this.chapters);
     }
 
-    _parseChapters() {
-        // 中文 + 英文章节
-        const regex = /^(\s*第[零一二三四五六七八九十百千万\d]{1,10}章.*$)|(^\s*Chapter\s+[0-9IVXLCDM]+[:\-–]?\s*.*$)/gim;
-        const matches = [...this.text.matchAll(regex)];
+    _parse() {
+        const regex = /^\s*(第[零一二三四五六七八九十百千万\d]{1,10}[部章回节卷].*|序|前言|楔子|引子|Chapter\s+[0-9IVXLCDM]+.*|Part\s+[0-9IVXLCDM]+.*|Prologue|Foreword)\s*$/gim;
 
-        if (matches.length >= 3) {
-            // 正常章节识别
-            this.chapters = matches.map((m, i) => {
-                const start = m.index;
-                const end = i + 1 < matches.length ? matches[i + 1].index : this.text.length;
-                return {
-                    title: m[0].trim(),
-                    start,
-                    end
-                };
-            });
-        } else {
-            // fallback：按空行切分，每段最多 3000 字
-            this.chapters = [];
-            let start = 0;
-            let count = 1;
+        const matches = [];
+        let m;
 
-            const segments = this.text.split(/\n{2,}/); // 空行分段
-            for (let seg of segments) {
-                let segStart = start;
-                while (seg.length > 3000) {
-                    this.chapters.push({
-                        title: `第${count}节`,
-                        start: segStart,
-                        end: segStart + 3000
-                    });
-                    segStart += 3000;
-                    seg = seg.slice(3000);
-                    count++;
-                }
-                if (seg.length > 0) {
-                    this.chapters.push({
-                        title: `第${count}节`,
-                        start: segStart,
-                        end: segStart + seg.length
-                    });
-                    count++;
-                }
-                start = segStart + seg.length;
+        while ((m = regex.exec(this.text)) !== null) {
+            const name = m[0].trim();
+            if (name) { // 忽略空行
+                matches.push({
+                    name,
+                    start: m.index
+                });
             }
+        }
+
+        if (matches.length >= 1) {
+            for (let i = 0; i < matches.length; i++) {
+                const start = matches[i].start;
+                const end = i + 1 < matches.length ? matches[i + 1].start : this.text.length;
+
+                // 忽略零长度章节
+                if (end > start) {
+                    this.chapters.push({
+                        name: matches[i].name,
+                        start,
+                        end
+                    });
+                }
+            }
+
+            // 如果第一个章节不是从 0 开始，作为前言处理
+            if (this.chapters[0].start > 0) {
+                this.chapters.unshift({
+                    name: '前言',
+                    start: 0,
+                    end: this.chapters[0].start
+                });
+            }
+        } else {
+            this._fallback();
+        }
+    }
+
+    _fallback() {
+        const size = 3000;
+        let cursor = 0;
+        let index = 1;
+
+        while (cursor < this.text.length) {
+            let end = cursor + size;
+            if (end > this.text.length) end = this.text.length;
+
+            if (end > cursor) { // 确保不产生空章节
+                this.chapters.push({
+                    name: '第' + index + '节',
+                    start: cursor,
+                    end: end
+                });
+            }
+
+            cursor = end;
+            index++;
         }
     }
 }

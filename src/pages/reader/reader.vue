@@ -3,7 +3,6 @@
         <div class="container">
             <ButtonColumn>
                 <IconButton :icon="require('../../assets/back.png')" @click="back" />
-                <IconButton :icon="require('../../assets/home.png')" @click="home" />
                 <IconButton :icon="require('../../assets/menu.png')" @click="switchMenu" />
             </ButtonColumn>
             <div class="loading-area" v-if="loading">
@@ -15,14 +14,22 @@
                 <div class="next" @click="next" />
             </div>
             <scroller style="flex: 1;" v-else-if="reader.mode === 'scroll'" over-scroll="50px" over-fling="50px">
-                <text class="content">{{ reader.content }}</text>
-                <div class="button-line">
-                    <!-- TODO: add buttons -->
+                <div style="min-height: 100vh;">
+                    <text ref="target" class="content">{{ reader.content }}</text>
+                    <div class="button-line">
+                        <IconButton :icon="require('../../assets/back.png')" @click="prevChapter" />
+                        <IconButton :icon="require('../../assets/next.png')" @click="nextChapter" />
+                    </div>
                 </div>
             </scroller>
         </div>
         <div class="mask" :class="{ open: showMenu }" @click="switchMenu" />
-        <div class="menu" :class="{ open: showMenu }">
+        <div v-if="!loading" class="menu" :class="{ open: showMenu }">
+            <scroller class="menu-scroller">
+                <text class="lower-title">章节</text>
+                <MenuCard :text="reader.book.getChapterName(index)" v-for="index in reader.book.getChapterCount()"
+                    :key="index" :active="index === reader.chapterIndex" @click="loadChapter(index)" />
+            </scroller>
         </div>
     </div>
 </template>
@@ -34,6 +41,7 @@ const h = env.deviceHeight;
 
 import ButtonColumn from "../../components/button-column.vue";
 import IconButton from "../../components/icon-button.vue";
+import MenuCard from "../../components/menu-card.vue";
 
 import BookParser from '../../utils/BookParser/BookParser.js';
 import Reader from "../../utils/Reader/Reader.js";
@@ -43,6 +51,7 @@ export default {
     components: {
         ButtonColumn,
         IconButton,
+        MenuCard,
     },
     data() {
         return {
@@ -54,10 +63,7 @@ export default {
     methods: {
         back() {
             this.$page.finish();
-        },
-        home() {
-            this.$page.finish();
-            $falcon.navTo('index');
+            // TODO: save progress
         },
         prev() {
             this.reader.prev();
@@ -65,22 +71,43 @@ export default {
         next() {
             this.reader.next();
         },
+        prevChapter() {
+            this.reader.prevChapter();
+        },
+        nextChapter() {
+            this.reader.nextChapter();
+            this.$page.$dom.scrollToElement(this.$refs['target'], { offset: 0 })
+        },
         switchMenu() {
             this.showMenu = !this.showMenu;
+        },
+        loadChapter(index) {
+            this.reader.loadChapter(index);
+            this.showMenu = false;
         },
         onShow() {
             const parser = new BookParser(this.$page.options.path);
             parser.load().then(book => {
                 this.reader = new Reader(book, {
-                    mode: 'scroll',
+                    mode: 'page',
                     fontSize: 10,
                     lineHeight: 14,
                     viewportWidth: w - 0.39 * h,
                     viewportHeight: h
                 });
                 this.loading = false;
-            })
-        }
+            });
+
+            this._backpressed = () => {
+                this.back();
+            }
+            this.$page.$npage.setSupportBack(false);
+            this.$page.$npage.on("backpressed", this._backpressed);
+        },
+        onHide() {
+            this.$page.$npage.setSupportBack(true);
+            this.$page.$npage.off("backpressed", this._backpressed);
+        },
     }
 }
 </script>
@@ -135,6 +162,7 @@ export default {
     top: 0;
     width: 80vw;
     height: 100vh;
+    padding: 8vh 8vh 8vh 18vh;
     background-color: @surface;
     border-radius: 14vh 0 0 14vh;
     transform: translateX(100%);
@@ -143,5 +171,22 @@ export default {
 
 .menu.open {
     transform: translateX(0);
+}
+
+.menu-scroller {
+    height: 100%;
+}
+
+.lower-title {
+    margin-bottom: 6vh;
+    font-size: 10vh;
+    color: @outline;
+}
+
+.button-line {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 8vh 8vh 8vh 0;
 }
 </style>

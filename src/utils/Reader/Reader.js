@@ -129,6 +129,26 @@ export default class Reader {
         this.render(this.offset);
     }
 
+    nextChapter() {
+        if (this.chapterIndex >= this.book.chapters.length - 1) return;
+
+        this.chapterIndex++;
+        this.chapterText = this.book.getChapter(this.chapterIndex);
+        this.offset = 0;
+
+        this.render(this.offset);
+    }
+
+    prevChapter() {
+        if (this.chapterIndex <= 0) return;
+
+        this.chapterIndex--;
+        this.chapterText = this.book.getChapter(this.chapterIndex);
+        this.offset = 0;
+
+        this.render(this.offset);
+    }
+
     setFont(vh) { this.fontSize = vh; this.render(this.offset); }
     setLine(vh) { this.lineHeight = vh; this.render(this.offset); }
     setViewport(w, h) { this.viewportWidth = w; this.viewportHeight = h; this.render(this.offset); }
@@ -137,5 +157,5 @@ export default class Reader {
     getProgress() { return { chapterIndex: this.chapterIndex, offset: this.offset, mode: this.mode }; }
     setProgress(p) { if (!p) return this.go(p.chapterIndex || 0, p.offset || 0, p.mode || this.mode); }
     serialize() { return JSON.stringify(this.getProgress()); }
-    restore(json) { try { this.setProgress(JSON.parse(json)); } catch (e) {} }
+    restore(json) { try { this.setProgress(JSON.parse(json)); } catch (e) { } }
 }

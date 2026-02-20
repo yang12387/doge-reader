@@ -3,7 +3,9 @@
         <image class="icon" :src="node.isDirectory()
             ? require('../assets/folder-icon.png')
             : require('../assets/file-icon.png')" />
-        <text class="text">{{ node.name }}</text>
+        <scroller scroll-direction="horizontal">
+            <text class="text">{{ node.name }}</text>
+        </scroller>
     </div>
 </template>
 

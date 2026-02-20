@@ -107,7 +107,8 @@ var style_0 = { "_": {
     "marginTop": "9vh",
     "marginBottom": "7vh",
     "color": "#8e918f",
-    "fontSize": "12vh"
+    "fontSize": "12vh",
+    "lineHeight": "12vh"
   },
   "link": {
     "marginTop": 0,

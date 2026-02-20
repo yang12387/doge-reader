@@ -1,5 +1,5 @@
 <template>
-    <div class="container" style="flex-direction: row;">
+    <div class="container">
         <ButtonColumn>
             <IconButton :icon="require('../../assets/back.png')" @click="back" />
         </ButtonColumn>
@@ -44,7 +44,7 @@ export default {
                 '作者': 'adogecheems',
                 '版本': meta.version,
                 '许可证': 'AGPLv3',
-                'GitHub': 'https://github.com/adogecheems/doge-calculator',
+                'GitHub': 'https://github.com/adogecheems/doge-reader',
                 '程序路径': meta.appPath,
             },
         };

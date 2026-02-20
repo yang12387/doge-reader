@@ -6,7 +6,6 @@
 
 <style lang="less" scoped>
 .wrapper {
-    min-width: 33vh;
     height: 100vh;
     padding: 7vh 12vh 7vh 5vh;
     flex-direction: column;

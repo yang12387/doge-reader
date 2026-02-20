@@ -86,11 +86,15 @@ _exports$1.__file = __file$1;
 var FileCard = _exports$1;
 
 class FileManager {
-    constructor(root = "/userdisk/Favorites") {
+    constructor(root = "/userdisk/Favorite") {
         this._stack = root.split('/').filter(Boolean);
-        this.loading = true;
-        this.nodeList = [];
         this._version = 0;
+
+        this.loading = true;
+        this.error = false;
+        this.nodeList = [];
+
+        this._refresh();
     }
 
     get workDir() {
@@ -100,6 +104,7 @@ class FileManager {
     async _refresh() {
         const version = ++this._version;
         this.loading = true;
+        this.error = false;
 
         try {
             const list = await fs.readdir(this.workDir, { withFileTypes: true });
@@ -119,6 +124,7 @@ class FileManager {
         } catch (e) {
             if (version !== this._version) return;
             this.nodeList = [];
+            this.error = true;
         }
 
         this.loading = false;
@@ -160,20 +166,17 @@ var script = {
             manager: new FileManager(),
         }
     },
-    mounted() {
-        this.manager._refresh();
-    },
     methods: {
         openLink(link) {
             $falcon.navTo(link);
+        },
+        home() {
+            this.$page.finish();
         },
         back() {
             if (!this.manager.goBack()) {
                 this.$page.finish();
             }
-        },
-        home() {
-            this.$page.finish();
         },
         open(index) {
             let path = this.manager.chooseFile(index);
@@ -206,7 +209,8 @@ var style_0 = { "_": {
     "marginTop": "9vh",
     "marginBottom": "7vh",
     "color": "#8e918f",
-    "fontSize": "12vh"
+    "fontSize": "12vh",
+    "lineHeight": "12vh"
   },
   "link": {
     "marginTop": 0,
@@ -223,6 +227,12 @@ var style_0 = { "_": {
   },
   "file-card": {
     "marginBottom": "4vh"
+  },
+  "error": {
+    "maxWidth": "80%",
+    "fontSize": "12vh",
+    "textAlign": "center",
+    "color": "#7a0f1c"
   },
   "loading": {
     "fontSize": "12vh",
@@ -263,19 +273,16 @@ var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
       "overScroll": "50px",
       "overFling": "50px"
     }
-  }, [_c('div', {
-    staticStyle: {
-      height: "1px"
-    }
-  }), _c('text', {
+  }, [_c('text', {
     staticClass: ["title"]
-  }, [_vm._v("本地文件")]), (_vm.manager.loading) ? _c('text', {
+  }, [_vm._v(_vm._s(_vm.manager.workDir))]), (_vm.manager.error) ? _c('text', {
+    staticClass: ["error"]
+  }, [_vm._v(_vm._s(_vm.manager.error) + " :列表失败，请退出重试")]) : (_vm.manager.loading) ? _c('text', {
     staticClass: ["loading"]
-  }, [_vm._v("少女祈祷中...")]) : _vm._e(), _c('div', {
-    staticClass: ["file-list"],
-    staticStyle: {
-      backgroundColor: "yellow"
-    }
+  }, [_vm._v("少女祈祷中...")]) : (_vm.manager.nodeList.length === 0) ? _c('text', {
+    staticClass: ["loading"]
+  }, [_vm._v("空空如也...")]) : _c('div', {
+    staticClass: ["file-list"]
   }, _vm._l((_vm.manager.nodeList), function(node, index) {
     return _c('FileCard', {
       key: node.name,

@@ -1,24 +1,28 @@
 import fs from 'fs';
 
 export default class FileManager {
-    constructor(root = "/userdisk/Favorites") {
+    constructor(root = "/userdisk/Favorite") {
         this._stack = root.split('/').filter(Boolean);
-        this.loading = true
-        this.nodeList = [];
         this._version = 0;
+
+        this.loading = true;
+        this.error = false;
+        this.nodeList = [];
+
+        this._refresh();
     }
 
-    get workDir() {
+    get cwd() {
         return '/' + this._stack.join('/');
     }
 
     async _refresh() {
         const version = ++this._version;
         this.loading = true;
+        this.error = false;
 
         try {
-            const list = await fs.readdir(this.workDir, { withFileTypes: true });
-
+            const list = await fs.readdir(this.cwd, { withFileTypes: true });
             if (version !== this._version) return;
 
             this.nodeList = list
@@ -34,6 +38,7 @@ export default class FileManager {
         } catch (e) {
             if (version !== this._version) return;
             this.nodeList = [];
+            this.error = true;
         }
 
         this.loading = false;
@@ -49,7 +54,7 @@ export default class FileManager {
             return null;
         }
 
-        return `${this.workDir}/${node.name}`;
+        return `${this.cwd}/${node.name}`;
     }
 
     goBack() {

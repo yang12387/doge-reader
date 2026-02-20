@@ -1,5 +1,5 @@
 <template>
-    <div class="container" style="flex-direction: row;">
+    <div class="container">
         <ButtonColumn>
             <IconButton class="button" :icon="require('../../assets/back.png')" @click="back" />
         </ButtonColumn>

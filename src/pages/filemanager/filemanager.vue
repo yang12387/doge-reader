@@ -5,10 +5,13 @@
             <IconButton :icon="require('../../assets/home.png')" @click="home" />
         </ButtonColumn>
         <scroller style="flex: 1;" over-scroll="50px" over-fling="50px" class="scroller">
-            <div style="height:1px;" />
-            <text class="title">本地文件</text>
-            <text v-if="manager.loading" class="loading">少女祈祷中...</text>
-            <div style="background-color:yellow;" class="file-list">
+            <scroller scroll-direction="horizontal">
+                <text class="title">{{ manager.cwd }}</text>
+            </scroller>
+            <text v-if="manager.error" class="error">啊勒,出错了喵!</text>
+            <text v-else-if="manager.loading" class="loading">少女祈祷中...</text>
+            <text v-else-if="manager.nodeList.length === 0" class="loading">什么也没有喵...</text>
+            <div v-else class="file-list">
                 <FileCard class="file-card" v-for="(node, index) in manager.nodeList" :key="node.name" :node="node"
                     @click="open(index)" />
             </div>
@@ -21,7 +24,7 @@ import ButtonColumn from "../../components/button-column.vue";
 import FileCard from "../../components/file-card.vue";
 import IconButton from "../../components/icon-button.vue";
 
-import FileManager from "../../FileManager/FileManager.js";
+import FileManager from "../../utils/FileManager/FileManager.js";
 
 export default {
     name: 'filemanager',
@@ -35,26 +38,23 @@ export default {
             manager: new FileManager(),
         }
     },
-    mounted() {
-        this.manager._refresh();
-    },
     methods: {
         openLink(link) {
             $falcon.navTo(link);
+        },
+        home() {
+            this.$page.finish();
         },
         back() {
             if (!this.manager.goBack()) {
                 this.$page.finish();
             }
         },
-        home() {
-            this.$page.finish();
-        },
         open(index) {
             let path = this.manager.chooseFile(index);
 
             if (path) {
-                this.openLink(path);
+                $falcon.navTo('reader', { path });
             }
         },
         onShow() {
@@ -85,9 +85,9 @@ export default {
     margin-bottom: 4vh;
 }
 
-.loading {
+.error {
     font-size: 12vh;
     text-align: center;
-    color: @outline;
+    color: @secondary;
 }
 </style>

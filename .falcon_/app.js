@@ -241,7 +241,10 @@ App$1.meta = {
     "index": "pages/index/index.vue",
     "filemanager": "pages/filemanager/filemanager.vue",
     "info": "pages/info/info.vue",
-    "license": "pages/license/license.vue"
+    "license": "pages/license/license.vue",
+    "reader": "pages/reader/reader.vue",
+    "history": "pages/history/history.vue",
+    "favorite": "pages/favorite/favorite.vue"
   }
 };
 App$1.meta.name = 'Doge阅读';

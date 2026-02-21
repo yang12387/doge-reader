@@ -1,6 +1,8 @@
-import { B as ButtonColumn, I as IconButton, _ as __$_require_assets_back_png__ } from './back-03f62ecb.js';
+import { B as ButtonColumn, I as IconButton, _ as __$_require_assets_back_png__ } from './back-1c1e0aad.js';
 import fs from 'fs';
 
+//
+//
 //
 //
 //
@@ -62,9 +64,13 @@ var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
         __$_require_assets_folder_icon_png__ :
         __$_require_assets_file_icon_png__
     }
-  }), _c('text', {
+  }), _c('scroller', {
+    attrs: {
+      "scrollDirection": "horizontal"
+    }
+  }, [_c('text', {
     staticClass: ["text"]
-  }, [_vm._v(_vm._s(_vm.node.name))])])
+  }, [_vm._v(_vm._s(_vm.node.name))])])])
 };
 
 var staticRenderFns$1=[];
@@ -97,7 +103,7 @@ class FileManager {
         this._refresh();
     }
 
-    get workDir() {
+    get cwd() {
         return '/' + this._stack.join('/');
     }
 
@@ -107,8 +113,7 @@ class FileManager {
         this.error = false;
 
         try {
-            const list = await fs.readdir(this.workDir, { withFileTypes: true });
-
+            const list = await fs.readdir(this.cwd, { withFileTypes: true });
             if (version !== this._version) return;
 
             this.nodeList = list
@@ -140,7 +145,7 @@ class FileManager {
             return null;
         }
 
-        return `${this.workDir}/${node.name}`;
+        return `${this.cwd}/${node.name}`;
     }
 
     goBack() {
@@ -182,7 +187,7 @@ var script = {
             let path = this.manager.chooseFile(index);
 
             if (path) {
-                this.openLink(path);
+                $falcon.navTo('reader', { path });
             }
         },
         onShow() {
@@ -202,15 +207,21 @@ var script = {
 
 var style_0 = { "_": {
   "container": {
-    "backgroundColor": "#000000",
-    "height": "100vh"
+    "width": "100vw",
+    "height": "100vh",
+    "flexDirection": "row"
   },
   "title": {
-    "marginTop": "9vh",
-    "marginBottom": "7vh",
+    "marginTop": "10vh",
+    "marginBottom": "8vh",
     "color": "#8e918f",
     "fontSize": "12vh",
-    "lineHeight": "12vh"
+    "lineHeight": "15vh"
+  },
+  "loading": {
+    "fontSize": "12vh",
+    "textAlign": "center",
+    "color": "#8e918f"
   },
   "link": {
     "marginTop": 0,
@@ -229,15 +240,9 @@ var style_0 = { "_": {
     "marginBottom": "4vh"
   },
   "error": {
-    "maxWidth": "80%",
     "fontSize": "12vh",
     "textAlign": "center",
     "color": "#7a0f1c"
-  },
-  "loading": {
-    "fontSize": "12vh",
-    "textAlign": "center",
-    "color": "#8e918f"
   }
 } };
 
@@ -273,15 +278,19 @@ var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
       "overScroll": "50px",
       "overFling": "50px"
     }
+  }, [_c('scroller', {
+    attrs: {
+      "scrollDirection": "horizontal"
+    }
   }, [_c('text', {
     staticClass: ["title"]
-  }, [_vm._v(_vm._s(_vm.manager.workDir))]), (_vm.manager.error) ? _c('text', {
+  }, [_vm._v(_vm._s(_vm.manager.cwd))])]), (_vm.manager.error) ? _c('text', {
     staticClass: ["error"]
-  }, [_vm._v(_vm._s(_vm.manager.error) + " :列表失败，请退出重试")]) : (_vm.manager.loading) ? _c('text', {
+  }, [_vm._v("啊勒,出错了喵!")]) : (_vm.manager.loading) ? _c('text', {
     staticClass: ["loading"]
   }, [_vm._v("少女祈祷中...")]) : (_vm.manager.nodeList.length === 0) ? _c('text', {
     staticClass: ["loading"]
-  }, [_vm._v("空空如也...")]) : _c('div', {
+  }, [_vm._v("什么也没有喵...")]) : _c('div', {
     staticClass: ["file-list"]
   }, _vm._l((_vm.manager.nodeList), function(node, index) {
     return _c('FileCard', {

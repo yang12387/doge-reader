@@ -13,7 +13,6 @@
 //
 //
 //
-//
 
 var script$1 = {
     name: 'ButtonColumn',
@@ -21,7 +20,6 @@ var script$1 = {
 
 var style_0$1 = { "_": {
   "wrapper": {
-    "minWidth": "33vh",
     "height": "100vh",
     "paddingTop": "7vh",
     "paddingRight": "12vh",

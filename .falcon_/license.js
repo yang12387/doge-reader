@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { B as ButtonColumn, I as IconButton, _ as __$_require_assets_back_png__ } from './back-03f62ecb.js';
+import { B as ButtonColumn, I as IconButton, _ as __$_require_assets_back_png__ } from './back-1c1e0aad.js';
 
 //
 
@@ -34,15 +34,21 @@ var script = {
 
 var style_0 = { "_": {
   "container": {
-    "backgroundColor": "#000000",
-    "height": "100vh"
+    "width": "100vw",
+    "height": "100vh",
+    "flexDirection": "row"
   },
   "title": {
-    "marginTop": "9vh",
-    "marginBottom": "7vh",
+    "marginTop": "10vh",
+    "marginBottom": "8vh",
     "color": "#8e918f",
     "fontSize": "12vh",
-    "lineHeight": "12vh"
+    "lineHeight": "15vh"
+  },
+  "loading": {
+    "fontSize": "12vh",
+    "textAlign": "center",
+    "color": "#8e918f"
   },
   "link": {
     "marginTop": 0,
@@ -67,10 +73,7 @@ var style_0 = { "_": {
 var render = function (){
 var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: ["container"],
-    staticStyle: {
-      flexDirection: "row"
-    }
+    staticClass: ["container"]
   }, [_c('ButtonColumn', [_c('IconButton', {
     staticClass: ["button"],
     attrs: {

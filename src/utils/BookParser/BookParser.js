@@ -9,75 +9,98 @@ export default class BookParser {
     }
 
     async load() {
-        this.text = await fs.readFile(this.path, 'utf-8');
-        this.text = this.text.replace(/\r\n/g, '\n');
+        this.text = await fs.readFile(this.path);
+        this.text = this.text.replace(/\r\n/g, '\n').trim();
         this._parse();
         return new Book(this.text, this.chapters);
     }
 
     _parse() {
-        const regex = /^\s*(第[零一二三四五六七八九十百千万\d]{1,10}[部章回节卷].*|序|前言|楔子|引子|Chapter\s+[0-9IVXLCDM]+.*|Part\s+[0-9IVXLCDM]+.*|Prologue|Foreword)\s*$/gim;
+        // 更严格的章节识别
+        var regex = /^(第[零一二三四五六七八九十百千万\d]{1,10}[部章回节卷][^\n]{0,40}|序章?|前言|楔子|引子|Chapter\s+[0-9IVXLCDM]+[^\n]{0,40}|Part\s+[0-9IVXLCDM]+[^\n]{0,40}|Prologue|Foreword)\s*$/gim;
 
-        const matches = [];
-        let m;
+        var matches = [];
+        var m;
 
         while ((m = regex.exec(this.text)) !== null) {
-            const name = m[0].trim();
-            if (name) { // 忽略空行
-                matches.push({
-                    name,
-                    start: m.index
-                });
-            }
+
+            var name = m[0].trim();
+
+            // 排除异常标题
+            if (name.length === 0 || name.length > 50) continue;
+
+            matches.push({
+                name: name,
+                start: m.index
+            });
         }
 
-        if (matches.length >= 1) {
-            for (let i = 0; i < matches.length; i++) {
-                const start = matches[i].start;
-                const end = i + 1 < matches.length ? matches[i + 1].start : this.text.length;
-
-                // 忽略零长度章节
-                if (end > start) {
-                    this.chapters.push({
-                        name: matches[i].name,
-                        start,
-                        end
-                    });
-                }
-            }
-
-            // 如果第一个章节不是从 0 开始，作为前言处理
-            if (this.chapters[0].start > 0) {
-                this.chapters.unshift({
-                    name: '前言',
-                    start: 0,
-                    end: this.chapters[0].start
-                });
-            }
-        } else {
+        // 如果匹配太少，直接 fallback
+        if (matches.length < 2) {
             this._fallback();
+            return;
+        }
+
+        for (var i = 0; i < matches.length; i++) {
+
+            var start = matches[i].start;
+            var end = (i + 1 < matches.length)
+                ? matches[i + 1].start
+                : this.text.length;
+
+            // 正文长度必须足够（防止连续标题）
+            if (end - start < 200) continue;
+
+            this.chapters.push({
+                name: matches[i].name,
+                start: start,
+                end: end
+            });
+        }
+
+        // 没有有效章节则 fallback
+        if (this.chapters.length === 0) {
+            this._fallback();
+            return;
+        }
+
+        // 修复前置正文
+        if (this.chapters[0].start > 0) {
+            this.chapters.unshift({
+                name: '前言',
+                start: 0,
+                end: this.chapters[0].start
+            });
+        }
+
+        // 删除尾部异常空章节
+        var last = this.chapters[this.chapters.length - 1];
+        if (last.end - last.start < 100) {
+            this.chapters.pop();
         }
     }
 
     _fallback() {
-        const size = 3000;
-        let cursor = 0;
-        let index = 1;
+
+        var size = 3000;
+        var cursor = 0;
+        var index = 1;
 
         while (cursor < this.text.length) {
-            let end = cursor + size;
+
+            var end = cursor + size;
             if (end > this.text.length) end = this.text.length;
 
-            if (end > cursor) { // 确保不产生空章节
+            if (end - cursor > 100) {
                 this.chapters.push({
                     name: '第' + index + '节',
                     start: cursor,
                     end: end
                 });
+                index++;
             }
 
             cursor = end;
-            index++;
         }
     }
 }

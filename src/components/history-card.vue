@@ -1,19 +1,18 @@
 <template>
     <div class="wrapper" @click="$emit('click')">
-        <image class="icon" :src="node.isDirectory()
-            ? require('../assets/folder-icon.png')
-            : require('../assets/file-icon.png')" />
         <scroller scroll-direction="horizontal" @click="$emit('click')">
-            <text class="text">{{ node.name }}</text>
+            <text class="name">{{ name }}</text>
         </scroller>
+        <text class="time">{{ time }}</text>
     </div>
 </template>
 
 <script>
 export default {
-    name: "FileCard",
+    name: "HistoryCard",
     props: {
-        node: { type: Object, required: true },
+        name: { type: String, required: true },
+        time: { type: String, required: true },
     },
 };
 </script>
@@ -25,7 +24,8 @@ export default {
     height: 30vh;
     background-color: @neutral;
     border-radius: 6vh;
-    padding: 3vh 7vh;
+    padding: 3vh 10vh;
+    justify-content: space-between;
     align-items: center;
     flex-direction: row;
 }
@@ -34,14 +34,13 @@ export default {
     opacity: 0.6;
 }
 
-.icon {
-    width: 15vh;
-    height: 15vh;
-    margin-right: 6vh;
-}
-
-.text {
+.name {
     font-size: 10vh;
     color: @on-neutral;
+}
+
+.time {
+    font-size: 8vh;
+    color: @outline;
 }
 </style>

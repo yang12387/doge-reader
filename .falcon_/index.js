@@ -1,4 +1,7 @@
-import { B as ButtonColumn, I as IconButton, _ as __$_require_assets_back_png__ } from './back-03f62ecb.js';
+import { B as ButtonColumn, I as IconButton, _ as __$_require_assets_back_png__ } from './back-1c1e0aad.js';
+import { H as HistoryCard } from './history-card-013636db.js';
+import { S as Setting } from './Setting-5fce32b4.js';
+import 'storage';
 
 //
 //
@@ -80,35 +83,56 @@ var MainButton = _exports$1;
 
 //
 
+const setting = new Setting();
+
 var script = {
     name: 'index',
     components: {
         MainButton,
         ButtonColumn,
         IconButton,
+        HistoryCard
     },
-    data() { },
+    data() {
+        return {
+            history: []
+        }
+    },
     methods: {
         openLink(link) {
             $falcon.navTo(link);
         },
         back() {
             this.$page.finish();
+        },
+        open(path, progress) {
+            $falcon.navTo('reader', { path, progress: JSON.stringify(progress) });
+        },
+        onShow() {
+            setting.getAllItems().then(items => {
+                this.history = items;
+            });
         }
     }
 };
 
 var style_0 = { "_": {
   "container": {
-    "backgroundColor": "#000000",
-    "height": "100vh"
+    "width": "100vw",
+    "height": "100vh",
+    "flexDirection": "row"
   },
   "title": {
-    "marginTop": "9vh",
-    "marginBottom": "7vh",
+    "marginTop": "10vh",
+    "marginBottom": "8vh",
     "color": "#8e918f",
     "fontSize": "12vh",
-    "lineHeight": "12vh"
+    "lineHeight": "15vh"
+  },
+  "loading": {
+    "fontSize": "12vh",
+    "textAlign": "center",
+    "color": "#8e918f"
   },
   "link": {
     "marginTop": 0,
@@ -124,6 +148,11 @@ var style_0 = { "_": {
     "flex": 1,
     "marginRight": "12vh",
     "flexDirection": "row"
+  },
+  "cards-area": {
+    "flex": 2,
+    "justifyContent": "space-between",
+    "paddingBottom": "3vh"
   },
   "main-button": {
     "flex": 1,
@@ -142,10 +171,7 @@ var __$_require_assets_heart_png__ = "images/1973abf6acba1cf149cccab19da1e6f5.pn
 var render = function (){
 var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: ["container"],
-    staticStyle: {
-      flexDirection: "row"
-    }
+    staticClass: ["container"]
   }, [_c('ButtonColumn', [_c('IconButton', {
     attrs: {
       "icon": __$_require_assets_back_png__
@@ -180,10 +206,22 @@ var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   }, [_vm._v("最近阅读")]), _c('div', {
     staticClass: ["content"]
   }, [_c('div', {
-    staticStyle: {
-      flex: "2"
-    }
-  }), _c('MainButton', {
+    staticClass: ["cards-area"]
+  }, _vm._l((_vm.history.slice(0, 2)), function(item, index) {
+    return _c('HistoryCard', {
+      key: index,
+      attrs: {
+        "item": item,
+        "name": item.path.split('/').pop(),
+        "time": ""
+      },
+      on: {
+        "click": function($event) {
+          return _vm.open(item.path, item.progress)
+        }
+      }
+    })
+  }), 1), _c('MainButton', {
     staticClass: ["main-button"],
     attrs: {
       "icon": __$_require_assets_folder_png__,
@@ -199,12 +237,12 @@ var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
     staticClass: ["main-button"],
     attrs: {
       "icon": __$_require_assets_heart_png__,
-      "text": "收藏",
+      "text": "书签",
       "color": ['#7a0f1c', '#ffd6db']
     },
     on: {
       "click": function($event) {
-        return _vm.openLink('favorites')
+        return _vm.openLink('favorite')
       }
     }
   })], 1)])], 1)

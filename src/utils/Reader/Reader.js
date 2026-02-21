@@ -154,8 +154,6 @@ export default class Reader {
     setViewport(w, h) { this.viewportWidth = w; this.viewportHeight = h; this.render(this.offset); }
     setMode(mode) { this.mode = mode; this.render(this.offset); }
 
-    getProgress() { return { chapterIndex: this.chapterIndex, offset: this.offset, mode: this.mode }; }
-    setProgress(p) { if (!p) return this.go(p.chapterIndex || 0, p.offset || 0, p.mode || this.mode); }
-    serialize() { return JSON.stringify(this.getProgress()); }
-    restore(json) { try { this.setProgress(JSON.parse(json)); } catch (e) { } }
+    getProgress() { return { chapterIndex: this.chapterIndex, offset: this.offset }; }
+    setProgress(p) { if (!p) return; this.go(p.chapterIndex || 0, p.offset || 0); }
 }

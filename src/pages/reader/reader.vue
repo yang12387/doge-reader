@@ -3,6 +3,7 @@
         <div class="container">
             <ButtonColumn>
                 <IconButton :icon="require('../../assets/back.png')" @click="back" />
+                <IconButton :icon="require('../../assets/love.png')" @click="love" />
                 <IconButton :icon="require('../../assets/menu.png')" @click="switchMenu" />
             </ButtonColumn>
             <div class="loading-area" v-if="loading">
@@ -23,14 +24,15 @@
                 </div>
             </scroller>
         </div>
-        <div class="mask" :class="{ open: showMenu }" @click="switchMenu" />
-        <div v-if="!loading" class="menu" :class="{ open: showMenu }">
+        <div class="mask" :class="{ 'mask-open': showMenu }" @click="switchMenu" />
+        <div v-if="!loading" class="menu" :class="{ 'menu-open': showMenu }">
             <scroller class="menu-scroller">
                 <text class="lower-title">章节</text>
-                <MenuCard :text="reader.book.getChapterName(index)" v-for="index in reader.book.getChapterCount()"
+                <MenuCard :text="reader.book.getChapterName(index)" v-for="index in reader.book.getChapterCount() - 1"
                     :key="index" :active="index === reader.chapterIndex" @click="loadChapter(index)" />
             </scroller>
         </div>
+        <Toast text="书签已保存" :show="toastShow" />
     </div>
 </template>
 
@@ -42,9 +44,13 @@ const h = env.deviceHeight;
 import ButtonColumn from "../../components/button-column.vue";
 import IconButton from "../../components/icon-button.vue";
 import MenuCard from "../../components/menu-card.vue";
+import Toast from "../../components/toast.vue";
 
 import BookParser from '../../utils/BookParser/BookParser.js';
 import Reader from "../../utils/Reader/Reader.js";
+import Setting from "../../utils/Setting/Setting.js";
+
+const setting = new Setting();
 
 export default {
     name: 'reader',
@@ -52,18 +58,29 @@ export default {
         ButtonColumn,
         IconButton,
         MenuCard,
+        Toast,
     },
     data() {
         return {
             loading: true,
             showMenu: false,
             reader: null,
+            toastShow: false,
         }
     },
     methods: {
         back() {
-            this.$page.finish();
-            // TODO: save progress
+            setting.addItem(this.$page.options.path, this.reader.getProgress()).then(() => {
+                this.$page.finish();
+            })
+        },
+        love() {
+            setting.addItem(this.$page.options.path, this.reader.getProgress(), 'favorite').then(() => {
+                this.toastShow = true;
+                setTimeout(() => {
+                    this.toastShow = false;
+                }, 1000);
+            });
         },
         prev() {
             this.reader.prev();
@@ -95,6 +112,17 @@ export default {
                     viewportWidth: w - 0.39 * h,
                     viewportHeight: h
                 });
+
+                if (this.$page.options.progress) {
+                    this.reader.setProgress(JSON.parse(this.$page.options.progress));
+                } else {
+                    setting.getItem(this.$page.options.path).then(progress => {
+                        if (progress) {
+                            this.reader.setProgress(progress);
+                        }
+                    });
+                }
+
                 this.loading = false;
             });
 
@@ -152,7 +180,7 @@ export default {
     background-color: rgba(0, 0, 0, 0.4);
 }
 
-.mask.open {
+.mask-open {
     width: 100vw;
 }
 
@@ -169,7 +197,7 @@ export default {
     transition: transform 0.3s ease-in-out;
 }
 
-.menu.open {
+.menu-open {
     transform: translateX(0);
 }
 

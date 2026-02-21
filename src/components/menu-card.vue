@@ -1,5 +1,5 @@
 <template>
-    <div class="card" :class="{ active: active }" @click="$emit('click')">
+    <div class="card" :class="{ 'card-active': active }" @click="$emit('click')">
         <text class="text">{{ text }}</text>
     </div>
 </template>
@@ -26,7 +26,7 @@ export default {
     background-color: @neutral;
 }
 
-.card.active {
+.card-active {
     background-color: @primary;
 }
 

@@ -1,11 +1,9 @@
 <template>
     <div class="wrapper" @click="$emit('click')">
         <image class="icon" :src="node.isDirectory()
-            ? require('../assets/folder-icon.png')
-            : require('../assets/file-icon.png')" />
-        <scroller scroll-direction="horizontal" @click="$emit('click')">
-            <text class="text">{{ node.name }}</text>
-        </scroller>
+            ? require('../assets/folder-icon.png?base64')
+            : require('../assets/file-icon.png?base64')" />
+        <text class="text">{{ node.name }}</text>
     </div>
 </template>
 

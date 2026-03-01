@@ -244,7 +244,8 @@ App$1.meta = {
     "license": "pages/license/license.vue",
     "reader": "pages/reader/reader.vue",
     "history": "pages/history/history.vue",
-    "favorite": "pages/favorite/favorite.vue"
+    "favorite": "pages/favorite/favorite.vue",
+    "setting": "pages/setting/setting.vue"
   }
 };
 App$1.meta.name = 'Doge阅读';

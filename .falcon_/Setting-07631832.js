@@ -87,18 +87,18 @@ class Setting {
         }
     }
 
-    async setFontSize(size) {
-        if (size === 'large' || size === 'medium' || size === 'small') {
-            await this._set('fontSize', size);
+    async setFont(larger) {
+        if (larger === true || larger === false) {
+            await this._set('font', larger);
         }
     }
 
-    async getFontSize() {
-        if (await this._get('fontSize')) {
-            return await this._get('fontSize');
+    async isLargeFont() {
+        if (await this._get('font') === null) {
+            await this._set('font', false);
+            return false;
         } else {
-            await this._set('fontSize', 'medium');
-            return 'medium';
+            return await this._get('font');
         }
     }
 }

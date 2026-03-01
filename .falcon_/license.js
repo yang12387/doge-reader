@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { B as ButtonColumn, I as IconButton, _ as __$_require_assets_back_png__ } from './back-1c1e0aad.js';
+import { B as ButtonColumn, I as IconButton, _ as __$_require_assets_back_png_base64__ } from './back-d53c5241.js';
 
 //
 
@@ -77,7 +77,7 @@ var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   }, [_c('ButtonColumn', [_c('IconButton', {
     staticClass: ["button"],
     attrs: {
-      "icon": __$_require_assets_back_png__
+      "icon": __$_require_assets_back_png_base64__
     },
     on: {
       "click": _vm.back

@@ -2,9 +2,9 @@
     <div>
         <div class="container">
             <ButtonColumn>
-                <IconButton :icon="require('../../assets/back.png')" @click="back" />
-                <IconButton :icon="require('../../assets/love.png')" @click="love" />
-                <IconButton :icon="require('../../assets/menu.png')" @click="switchMenu" />
+                <IconButton :icon="require('../../assets/back.png?base64')" @click="back" />
+                <IconButton :icon="require('../../assets/love.png?base64')" @click="love" />
+                <IconButton :icon="require('../../assets/menu.png?base64')" @click="switchMenu" />
             </ButtonColumn>
             <div class="loading-area" v-if="loading">
                 <text class="loading">少女祈祷中...</text>
@@ -18,8 +18,8 @@
                 <div style="min-height: 100vh;">
                     <text ref="target" class="content">{{ reader.content }}</text>
                     <div class="button-line">
-                        <IconButton :icon="require('../../assets/back.png')" @click="prevChapter" />
-                        <IconButton :icon="require('../../assets/next.png')" @click="nextChapter" />
+                        <IconButton :icon="require('../../assets/back.png?base64')" @click="prevChapter" />
+                        <IconButton :icon="require('../../assets/next.png?base64')" @click="nextChapter" />
                     </div>
                 </div>
             </scroller>
@@ -32,7 +32,7 @@
                     :key="index" :active="index === reader.chapterIndex" @click="loadChapter(index)" />
             </scroller>
         </div>
-        <Toast text="书签已保存" :show="toastShow" />
+        <Toast />
     </div>
 </template>
 
@@ -65,78 +65,65 @@ export default {
             loading: true,
             showMenu: false,
             reader: null,
-            toastShow: false,
         }
     },
-    methods: {
-        back() {
-            setting.addItem(this.$page.options.path, this.reader.getProgress()).then(() => {
-                this.$page.finish();
-            })
-        },
-        love() {
-            setting.addItem(this.$page.options.path, this.reader.getProgress(), 'favorite').then(() => {
-                this.toastShow = true;
-                setTimeout(() => {
-                    this.toastShow = false;
-                }, 1000);
-            });
-        },
-        prev() {
-            this.reader.prev();
-        },
-        next() {
-            this.reader.next();
-        },
-        prevChapter() {
-            this.reader.prevChapter();
-        },
-        nextChapter() {
-            this.reader.nextChapter();
-            this.$page.$dom.scrollToElement(this.$refs['target'], { offset: 0 })
-        },
-        switchMenu() {
-            this.showMenu = !this.showMenu;
-        },
-        loadChapter(index) {
-            this.reader.loadChapter(index);
-            this.showMenu = false;
-        },
-        onShow() {
-            const parser = new BookParser(this.$page.options.path);
-            parser.load().then(book => {
-                this.reader = new Reader(book, {
-                    mode: 'page',
-                    fontSize: 10,
-                    lineHeight: 14,
-                    viewportWidth: w - 0.39 * h,
-                    viewportHeight: h
-                });
+    async created() {
+        const parser = new BookParser(this.$page.options.path);
+        const book = await parser.load();
 
-                if (this.$page.options.progress) {
-                    this.reader.setProgress(JSON.parse(this.$page.options.progress));
-                } else {
-                    setting.getItem(this.$page.options.path).then(progress => {
-                        if (progress) {
-                            this.reader.setProgress(progress);
-                        }
-                    });
+        this.reader = new Reader(book, {
+            mode: await setting.getMode() || 'page',
+            fontSize: 10,
+            lineHeight: 14,
+            viewportWidth: w - 0.39 * h,
+            viewportHeight: h
+        });
+
+        if (this.$page.options.progress) {
+            this.reader.setProgress(JSON.parse(this.$page.options.progress));
+        } else {
+            setting.getItem(this.$page.options.path).then(progress => {
+                if (progress) {
+                    this.reader.setProgress(progress);
                 }
-
-                this.loading = false;
             });
+        }
 
-            this._backpressed = () => {
-                this.back();
-            }
-            this.$page.$npage.setSupportBack(false);
-            this.$page.$npage.on("backpressed", this._backpressed);
-        },
-        onHide() {
-            this.$page.$npage.setSupportBack(true);
-            this.$page.$npage.off("backpressed", this._backpressed);
-        },
-    }
+        this.loading = false;
+},
+methods: {
+    back() {
+        this.$page.finish();
+    },
+    love() {
+        setting.addItem(this.$page.options.path, this.reader.getProgress(), 'favorite').then(() => {
+            $falcon.trigger('toast', { text: '书签已保存' });
+        });
+    },
+    prev() {
+        this.reader.prev();
+    },
+    next() {
+        this.reader.next();
+    },
+    prevChapter() {
+        this.reader.prevChapter();
+    },
+    nextChapter() {
+        this.reader.nextChapter();
+        this.$page.$dom.scrollToElement(this.$refs['target'], { offset: 0 })
+    },
+    switchMenu() {
+        this.showMenu = !this.showMenu;
+    },
+    loadChapter(index) {
+        this.reader.loadChapter(index);
+        this.showMenu = false;
+    },
+    onHide() {
+        setting.addItem(this.$page.options.path, this.reader.getProgress())
+    },
+}
 }
 </script>
 

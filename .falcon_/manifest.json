@@ -8,109 +8,61 @@
     "bigNum": false
   },
   "cert": {
-    "Setting-5fce32b4.js": {
-      "size": 2584,
-      "md5": "6208dc6c77b435f7e940fd97a52a36a4"
+    "Setting-07631832.js": {
+      "size": 2549,
+      "md5": "e6228f11c1d2b71715852622190e752d"
     },
     "app.js": {
-      "size": 6047,
-      "md5": "39b0e337ed7553f9ffbd9e4709f7a8af"
+      "size": 6091,
+      "md5": "b0505c792802ffceed47205ea436eeb7"
     },
-    "back-1c1e0aad.js": {
-      "size": 2507,
-      "md5": "6a928aa90fb5ee68978fa739e628a486"
+    "back-d53c5241.js": {
+      "size": 3475,
+      "md5": "733fdcc4df611ad9f131a7b3cfcad43c"
     },
-    "delete-9180b5e9.js": {
-      "size": 135,
-      "md5": "e7c9cdaada694cd7dd7bcc13aa8c59eb"
+    "delete-73cf201b.js": {
+      "size": 2215,
+      "md5": "beb281e433663c62f34c030ea4afcb77"
     },
     "favorite.js": {
-      "size": 3569,
-      "md5": "e728dd5de5ba1e1371f7f6a335d025cb"
+      "size": 3597,
+      "md5": "5ce6fa11429d27332de654dcb3c85a5a"
     },
     "filemanager.js": {
-      "size": 7458,
-      "md5": "b435530253f0232daa2b3c5f1d844999"
+      "size": 17488,
+      "md5": "87b92898f4edb728dc557328f8ee67d4"
     },
-    "history-card-013636db.js": {
-      "size": 1693,
-      "md5": "c092584f962f899760e54cfd7cfe3046"
+    "history-card-83d1effb.js": {
+      "size": 1512,
+      "md5": "b3454442d5377ed0e8b9f12fe2611959"
     },
     "history.js": {
-      "size": 3546,
-      "md5": "2dc8f8a7e20a39db7cec5004021cea87"
+      "size": 3574,
+      "md5": "61fd0fecd93d156795cae0176bdae428"
     },
     "index.js": {
-      "size": 5864,
-      "md5": "1ba5f994c844563a979f12840a37c8d1"
+      "size": 33964,
+      "md5": "c0e062cbe9253acdfb8644cf6bb2faf4"
     },
     "info.js": {
-      "size": 5357,
-      "md5": "12c72aedd549b861031e42e0168824c9"
+      "size": 700827,
+      "md5": "8368e92844f9650216390288dbca70af"
     },
     "license.js": {
-      "size": 2600,
-      "md5": "275aab890028710deabcb404991871a0"
+      "size": 2614,
+      "md5": "3092a58d1c9439f14aca7e08e8ede654"
     },
     "reader.js": {
-      "size": 20015,
-      "md5": "491804f1071260c420070ffc38817646"
+      "size": 25679,
+      "md5": "cc35c3a64bfdaa11cb764fa3848606a8"
+    },
+    "setting.js": {
+      "size": 6629,
+      "md5": "aad7883ac1030ed3c0259401d727931e"
     },
     "assets/license.txt": {
       "size": 34523,
       "md5": "eb1e647870add0502f8f010b19de32af"
-    },
-    "images/1973abf6acba1cf149cccab19da1e6f5.png": {
-      "size": 5619,
-      "md5": "9764e4a627893a8f65ad7747984273b3"
-    },
-    "images/221f2a6a5dedecaefd6ab73db82d676e.png": {
-      "size": 2693,
-      "md5": "5ec29bebd05234a5174ae6e0508ad0ba"
-    },
-    "images/36d8aa5c9c5167c039ee7f9585652a67.png": {
-      "size": 716,
-      "md5": "f51a57ccd982b30ca7d404bc0d1bb184"
-    },
-    "images/3951d363b86ba932375d1b2952ad99ff.png": {
-      "size": 699,
-      "md5": "74050998153ff97ed8a91fea2e6d3db9"
-    },
-    "images/3bf93e050536b244865f370f42aef40b.png": {
-      "size": 1551,
-      "md5": "6daea7c1a2d505b15c5cc0d0446b103c"
-    },
-    "images/6299f20683241591d31ade5a7702baa1.png": {
-      "size": 4234,
-      "md5": "c7f6dbcc71b61cd9b5f6bb00aaae5374"
-    },
-    "images/6a2eb561a9b634d8f865d5fd822b5136.png": {
-      "size": 2084,
-      "md5": "52b06ddde0eafb4857d78be1cceb00c1"
-    },
-    "images/6bc56a938378dceb66172c2e90444f54.png": {
-      "size": 2272,
-      "md5": "f21ec023916512c7938a1f6655ca4f7e"
-    },
-    "images/78d469f92a290861ee17c59985a24f24.png": {
-      "size": 521582,
-      "md5": "159a7a77e93dc7e7a3876b205871b95f"
-    },
-    "images/81ac1726dd18b34e4b68c49ae7680a47.png": {
-      "size": 3188,
-      "md5": "a7f753ba202a86a392dc23222c81282b"
-    },
-    "images/cfa3abe8a68835c659f0c5c188825870.png": {
-      "size": 3162,
-      "md5": "bf73948a943a987e6361a8f47cdf6e2e"
-    },
-    "images/dc03d95e3a26ea9eef57f81d8b1b3bce.png": {
-      "size": 4187,
-      "md5": "cb2fd8da679d22439d3cad043d8f3696"
-    },
-    "images/f3ca481ecf4c5332a4e48d0a777a42ca.png": {
-      "size": 1178,
-      "md5": "89d2a52c609404d8349214c4b8c5e01f"
     }
   }
 }

@@ -1,8 +1,8 @@
 <template>
     <div class="container" style="flex-direction: row;">
         <ButtonColumn>
-            <IconButton :icon="require('../../assets/back.png')" @click="back" />
-            <IconButton :icon="require('../../assets/delete.png')" @click="clear" />
+            <IconButton :icon="require('../../assets/back.png?base64')" @click="back" />
+            <IconButton :icon="require('../../assets/delete.png?base64')" @click="clear" />
         </ButtonColumn>
         <scroller style="flex: 1;" over-scroll="50px" over-fling="50px" class="scroller">
             <text class="title">书签</text>

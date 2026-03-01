@@ -1,11 +1,11 @@
 <template>
     <div class="container" style="flex-direction: row;">
         <ButtonColumn>
-            <IconButton :icon="require('../../assets/back.png')" @click="back" />
-            <IconButton :icon="require('../../assets/home.png')" @click="home" />
+            <IconButton :icon="require('../../assets/back.png?base64')" @click="back" />
+            <IconButton :icon="require('../../assets/home.png?base64')" @click="home" />
         </ButtonColumn>
         <scroller style="flex: 1;" over-scroll="50px" over-fling="50px" class="scroller">
-            <scroller scroll-direction="horizontal">
+            <scroller scroll-direction="horizontal" show-scrollbar="false">
                 <text class="title">{{ manager.cwd }}</text>
             </scroller>
             <text v-if="manager.error" class="error">啊勒,出错了喵!</text>

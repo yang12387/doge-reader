@@ -1,7 +1,7 @@
-import { B as ButtonColumn, I as IconButton, _ as __$_require_assets_back_png__ } from './back-1c1e0aad.js';
-import { H as HistoryCard } from './history-card-013636db.js';
-import { S as Setting } from './Setting-5fce32b4.js';
-import { _ as __$_require_assets_delete_png__ } from './delete-9180b5e9.js';
+import { B as ButtonColumn, I as IconButton, _ as __$_require_assets_back_png_base64__ } from './back-d53c5241.js';
+import { H as HistoryCard } from './history-card-83d1effb.js';
+import { S as Setting } from './Setting-07631832.js';
+import { _ as __$_require_assets_delete_png_base64__ } from './delete-73cf201b.js';
 import 'storage';
 
 //
@@ -86,14 +86,14 @@ var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
     }
   }, [_c('ButtonColumn', [_c('IconButton', {
     attrs: {
-      "icon": __$_require_assets_back_png__
+      "icon": __$_require_assets_back_png_base64__
     },
     on: {
       "click": _vm.back
     }
   }), _c('IconButton', {
     attrs: {
-      "icon": __$_require_assets_delete_png__
+      "icon": __$_require_assets_delete_png_base64__
     },
     on: {
       "click": _vm.clear

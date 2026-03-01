@@ -1,20 +1,23 @@
 <template>
     <div class="container">
         <ButtonColumn>
-            <IconButton :icon="require('../../assets/back.png')" @click="back" />
-            <IconButton :icon="require('../../assets/history.png')" @click="openLink('history')" />
-            <IconButton :icon="require('../../assets/info.png')" @click="openLink('info')" />
+            <IconButton :icon="require('../../assets/back.png?base64')" @click="back" />
+            <IconButton :icon="require('../../assets/setting.png?base64')" @click="openLink('setting')" />
+            <IconButton :icon="require('../../assets/info.png?base64')" @click="openLink('info')" />
         </ButtonColumn>
         <div style="flex: 1;">
-            <text class="title">最近阅读</text>
+            <div class="title-area">
+                <text class="title">最近阅读</text>
+                <IconButton :icon="require('../../assets/history.png?base64')" @click="openLink('history')" />
+            </div>
             <div class="content">
                 <div class="cards-area">
-                    <HistoryCard v-for="(item, index) in history.slice(0, 2)" :key="index" :item="item"
+                    <HistoryCard v-for="(item, index) in history.slice(-2)" :key="index" :item="item"
                         :name="item.path.split('/').pop()" time="" @click="open(item.path, item.progress)" />
                 </div>
-                <MainButton class="main-button" :icon="require('../../assets/folder.png')" text="本地文件"
+                <MainButton class="main-button" :icon="require('../../assets/folder.png?base64')" text="本地文件"
                     :color="['#004a77', '#c2e7ff']" @click="openLink('filemanager')" />
-                <MainButton class="main-button" :icon="require('../../assets/heart.png')" text="书签"
+                <MainButton class="main-button" :icon="require('../../assets/heart.png?base64')" text="书签"
                     :color="['#7a0f1c', '#ffd6db']" @click="openLink('favorite')" />
             </div>
         </div>
@@ -67,9 +70,16 @@ export default {
 @import "../../styles/common.less";
 @import "../../styles/md-color.less";
 
+.title-area {
+    margin-right: 6vh;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
 .content {
     flex: 1;
-    margin-right: 12vh;
+    margin-right: 6vh;
     flex-direction: row;
 }
 
@@ -77,6 +87,7 @@ export default {
     flex: 2;
     justify-content: space-between;
     padding-bottom: 3vh;
+    flex-direction: column-reverse;
 }
 
 .main-button {

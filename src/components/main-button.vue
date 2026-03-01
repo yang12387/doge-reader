@@ -18,7 +18,7 @@ export default {
 
 <style lang="less" scoped>
 .button {
-    border-radius: 14vh;
+    border-radius: 12vh;
     justify-content: center;
     align-items: center;
 }

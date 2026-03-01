@@ -1,13 +1,13 @@
 <template>
     <div class="container">
         <ButtonColumn>
-            <IconButton :icon="require('../../assets/back.png')" @click="back" />
+            <IconButton :icon="require('../../assets/back.png?base64')" @click="back" />
         </ButtonColumn>
         <scroller style="flex: 1;" show-scrollbar="false" over-scroll="50px" over-fling="50px">
             <text class="title">关于</text>
             <div class="wrapper">
                 <div class="intro">
-                    <image style="width: 40vh; height: 40vh;" :src="require('../../assets/app_icon.png')" />
+                    <image style="width: 40vh; height: 40vh;" :src="require('../../assets/app_icon.png?base64')" />
                     <text class="app-name">{{ appName }}</text>
                 </div>
                 <div class="description">

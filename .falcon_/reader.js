@@ -1,6 +1,6 @@
-import { B as ButtonColumn, I as IconButton, _ as __$_require_assets_back_png__ } from './back-1c1e0aad.js';
+import { B as ButtonColumn, I as IconButton, _ as __$_require_assets_back_png_base64__ } from './back-d53c5241.js';
 import fs from 'fs';
-import { S as Setting } from './Setting-5fce32b4.js';
+import { S as Setting } from './Setting-07631832.js';
 import 'storage';
 
 //
@@ -83,17 +83,34 @@ var MenuCard = _exports$2;
 
 var script$1 = {
     name: 'Toast',
-    props: {
-        text: { type: String, required: true },
-        show: { type: Boolean, default: false }
+    data() {
+        return {
+            show: false,
+            text: ''
+        }
     },
+    created() {
+        this.onToast = (e) => {
+            this.text = e.data.text;
+            this.show = true;
+
+            setTimeout(() => {
+                this.show = false;
+            }, 1000);
+        };
+
+        $falcon.on('toast', this.onToast);
+    },
+    beforeDestroy() {
+        $falcon.off('toast', this.onToast);
+    }
 };
 
 var style_0$1 = { "_": {
   "toast": {
     "position": "fixed",
     "width": "100%",
-    "height": "20vh",
+    "height": "22vh",
     "left": 0,
     "bottom": 0,
     "backgroundColor": "#004a77",
@@ -116,7 +133,7 @@ var style_0$1 = { "_": {
   },
   "toast-text": {
     "color": "#c2e7ff",
-    "fontSize": "8vh"
+    "fontSize": "10vh"
   }
 } };
 
@@ -500,78 +517,65 @@ var script = {
             loading: true,
             showMenu: false,
             reader: null,
-            toastShow: false,
         }
     },
-    methods: {
-        back() {
-            setting.addItem(this.$page.options.path, this.reader.getProgress()).then(() => {
-                this.$page.finish();
-            });
-        },
-        love() {
-            setting.addItem(this.$page.options.path, this.reader.getProgress(), 'favorite').then(() => {
-                this.toastShow = true;
-                setTimeout(() => {
-                    this.toastShow = false;
-                }, 1000);
-            });
-        },
-        prev() {
-            this.reader.prev();
-        },
-        next() {
-            this.reader.next();
-        },
-        prevChapter() {
-            this.reader.prevChapter();
-        },
-        nextChapter() {
-            this.reader.nextChapter();
-            this.$page.$dom.scrollToElement(this.$refs['target'], { offset: 0 });
-        },
-        switchMenu() {
-            this.showMenu = !this.showMenu;
-        },
-        loadChapter(index) {
-            this.reader.loadChapter(index);
-            this.showMenu = false;
-        },
-        onShow() {
-            const parser = new BookParser(this.$page.options.path);
-            parser.load().then(book => {
-                this.reader = new Reader(book, {
-                    mode: 'page',
-                    fontSize: 10,
-                    lineHeight: 14,
-                    viewportWidth: w - 0.39 * h,
-                    viewportHeight: h
-                });
+    async created() {
+        const parser = new BookParser(this.$page.options.path);
+        const book = await parser.load();
 
-                if (this.$page.options.progress) {
-                    this.reader.setProgress(JSON.parse(this.$page.options.progress));
-                } else {
-                    setting.getItem(this.$page.options.path).then(progress => {
-                        if (progress) {
-                            this.reader.setProgress(progress);
-                        }
-                    });
+        this.reader = new Reader(book, {
+            mode: await setting.getMode() || 'page',
+            fontSize: 10,
+            lineHeight: 14,
+            viewportWidth: w - 0.39 * h,
+            viewportHeight: h
+        });
+
+        if (this.$page.options.progress) {
+            this.reader.setProgress(JSON.parse(this.$page.options.progress));
+        } else {
+            setting.getItem(this.$page.options.path).then(progress => {
+                if (progress) {
+                    this.reader.setProgress(progress);
                 }
-
-                this.loading = false;
             });
+        }
 
-            this._backpressed = () => {
-                this.back();
-            };
-            this.$page.$npage.setSupportBack(false);
-            this.$page.$npage.on("backpressed", this._backpressed);
-        },
-        onHide() {
-            this.$page.$npage.setSupportBack(true);
-            this.$page.$npage.off("backpressed", this._backpressed);
-        },
-    }
+        this.loading = false;
+},
+methods: {
+    back() {
+        this.$page.finish();
+    },
+    love() {
+        setting.addItem(this.$page.options.path, this.reader.getProgress(), 'favorite').then(() => {
+            $falcon.trigger('toast', { text: '书签已保存' });
+        });
+    },
+    prev() {
+        this.reader.prev();
+    },
+    next() {
+        this.reader.next();
+    },
+    prevChapter() {
+        this.reader.prevChapter();
+    },
+    nextChapter() {
+        this.reader.nextChapter();
+        this.$page.$dom.scrollToElement(this.$refs['target'], { offset: 0 });
+    },
+    switchMenu() {
+        this.showMenu = !this.showMenu;
+    },
+    loadChapter(index) {
+        this.reader.loadChapter(index);
+        this.showMenu = false;
+    },
+    onHide() {
+        setting.addItem(this.$page.options.path, this.reader.getProgress());
+    },
+}
 };
 
 var style_0 = { "_": {
@@ -684,11 +688,14 @@ var style_0 = { "_": {
   }
 } };
 
-var __$_require_assets_love_png__ = "images/221f2a6a5dedecaefd6ab73db82d676e.png";
+const img$2 = "data:image/png;base64,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";
+  var __$_require_assets_love_png_base64__ = img$2;
 
-var __$_require_assets_menu_png__ = "images/3951d363b86ba932375d1b2952ad99ff.png";
+const img$1 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAAAXNSR0IB2cksfwAAAARnQU1BAACxjwv8YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAAlwSFlzAAAuIwAALiMBeKU/dgAAAAd0SU1FB+oCFAILH7PIAbwAAAIRSURBVHja7dyxahRRFAbgsxt2ZwtTWmixqYYENk+QVILBF9BKbH0KW3ttrbXSBxBRq7yBKTYsIbCFNul0l7sEZmxMq4bMwA33+x5gGOY/995hBv4IAAAAAAAAAAAAAAAAbqVBnxdfLBbbo9HoMCLuDYfDkcf9/5qmuYyIHyml4729vV+3agAWi8V2VVUvB4PB84ioxHkjqW3bN5vN5kVd1z+zH4Czs7O74/H4a0Tsy65TJymlB3VdX3R50WHXdzkej98Jvxf7VVW97fqinQ7A+fn5UUQcyaqn83oweLRcLh9mOwBbW1tPxNSvtm0f53wE7Iqo911gN+cBaEXU/yaQ8wCcyqf3I+A05wF4L6Lefch2AKbT6eeI+CSj3lb/x52dnS9ZfwdIKT2NiBNxdR7+t81m8yzr7wAREXVdX6SUDpqmeR0RSXQ3X1NN07xar9cHXX8FjOj5Z9B8Pr8zmUwOI+K+n0HX8+dn0PfVanU8m81WnggAAAAAAAAAAPBv+gEypR+AK/oBiAj9AMXTD1D8C5t+APQD2AX0A5S+CeQ8APoB+j8C9AMUTj9AwatfP0DB4esHKJR+gBLpBwAAAAAAAAAAAK5PP0Cm9ANwRT8AEaEfoHj6AYp/YdMPgH4Au4B+gNI3gZwHQD9A/0eAfoDC6QcoePXrByg4fP0AhdIPUCL9AAAAAAAAAAAAAAAAAPzVbw/fOCIHtnEgAAAAAElFTkSuQmCC";
+  var __$_require_assets_menu_png_base64__ = img$1;
 
-var __$_require_assets_next_png__ = "images/f3ca481ecf4c5332a4e48d0a777a42ca.png";
+const img = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAAAXNSR0IB2cksfwAAAARnQU1BAACxjwv8YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAAlwSFlzAAAuIwAALiMBeKU/dgAAAAd0SU1FB+oCFAsFCKFJknoAAAPwSURBVHja7d1Na1xVGMDx57k3k/HO2IV1EaVIJiQhBjHTghTiRjStlW5atfgl/AC6dSEFdwr9Am59a11YXyqi4kIMKGJMJkMydxISXDjOTGASM8yZ46aLGmpbewfx3Of/W4aZMMPzzzlnMm8iAAAAAAAAAAAAAAAAAAAAAAAACJLm4U7UarVKkiSnvffHvPc73W73m2q1us94cx7AxsbGE4VC4W1VXbr15977fe/9O7u7u28sLi7+yZhzGECaps9GUfSxqj74T5fx3n/f6/XOz8/P/8GocxTA2trao6VS6RdVPX63y3rvf+z1emeI4PaiEG90kiSv3cvwRURU9VS5XL6xurp6nHHnJABVvfQvL08EeQmgXq8fU9UT9xHNqXK5/GWtVnuYsQccQL/fH2ZYOU4mSXKDCAI/BG5tbW2p6mP3e30OhuGfAd7LeH3OBCEHsLe395b3/nciMLoFiIikafpMFEXXVTXJ8nusbwdRqDe8Uql87Zy74L0/GMFKYPbRQfBPBjUajbNxHF8bwUrw08HBwZm5ubkWARBBiwCIoEUARNAiACJoEQAR5DaCKI93ampq6gvn3MURPETM/XMHKjnWaDSej+P4KiuB0QCIwOgWcGQ7+Nw5d1FEMr04NK/bQe5XgFtXgrGxsWsi8gArgcEAiIAAiIAAiIAAiIAAiIAAiIAAiIAAiIAArEdAAEekaXoujuOrViKIGPnfVSqVz5xzL4nIYaa/LNWTpVLp0+Xl5YQAwovgunPuxawRiMhTExMTV9gCAtVsNs9HUfShiBQzbAXDfr//5MzMzK+sAIGZnJz8ZDgcZtoOVDUqFAovswUEHIFz7oJkeD2Bqj5OAGHLulX6/+sdG2O2/8k5YJ0VwPAhcDAYfEAABod/c/9/d3p6eoUtwODwvfc/tNvtV/k/QEDSNH0hjuOPJPu/goP44AkCMDx8AjA+fAIwPnwCMD588wFYH77pABi+4QAYvuEARviSr1x8wKQyfLvDNxUAwzccAMM3HADDNxwAwzccAMM3HADDNxwAwzccAMM3HADDNxwAwzccAMM3HADDzy7Y9wU0m82lOI4zf5qHiCx3Op3nrH5tXJArQL1eP1EsFn++16+Qv9Pw2+322YWFhY4YFeQKUCwWX2f4hgNQ1UsMfzSCe2vYysrKQyLySMYD3zmGH/ghkNO+4UPg9vb2byIywbJvdAXw3r/P8A0HcHh4eFlEOgzfaACzs7M7g8HgFe997y4rxXcMP6eHwJtfDvm09/6r2wy+JyJvbm5uLjH8HB4Cj1pfX58aHx8/LSJlEdnpdrvfVqvVfcYLAAAAAAAAAAAAAAAAAAAAAACA3PoLh4REIPgK0N4AAAAASUVORK5CYII=";
+  var __$_require_assets_next_png_base64__ = img;
 
 var render = function (){
 var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -696,21 +703,21 @@ var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
     staticClass: ["container"]
   }, [_c('ButtonColumn', [_c('IconButton', {
     attrs: {
-      "icon": __$_require_assets_back_png__
+      "icon": __$_require_assets_back_png_base64__
     },
     on: {
       "click": _vm.back
     }
   }), _c('IconButton', {
     attrs: {
-      "icon": __$_require_assets_love_png__
+      "icon": __$_require_assets_love_png_base64__
     },
     on: {
       "click": _vm.love
     }
   }), _c('IconButton', {
     attrs: {
-      "icon": __$_require_assets_menu_png__
+      "icon": __$_require_assets_menu_png_base64__
     },
     on: {
       "click": _vm.switchMenu
@@ -754,14 +761,14 @@ var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
     staticClass: ["button-line"]
   }, [_c('IconButton', {
     attrs: {
-      "icon": __$_require_assets_back_png__
+      "icon": __$_require_assets_back_png_base64__
     },
     on: {
       "click": _vm.prevChapter
     }
   }), _c('IconButton', {
     attrs: {
-      "icon": __$_require_assets_next_png__
+      "icon": __$_require_assets_next_png_base64__
     },
     on: {
       "click": _vm.nextChapter
@@ -796,12 +803,7 @@ var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
         }
       }
     })
-  })], 2)]) : _vm._e(), _c('Toast', {
-    attrs: {
-      "text": "书签已保存",
-      "show": _vm.toastShow
-    }
-  })], 1)
+  })], 2)]) : _vm._e(), _c('Toast')], 1)
 };
 
 var staticRenderFns=[];

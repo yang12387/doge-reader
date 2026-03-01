@@ -1,8 +1,6 @@
 <template>
     <div class="wrapper" @click="$emit('click')">
-        <scroller scroll-direction="horizontal" @click="$emit('click')">
-            <text class="name">{{ name }}</text>
-        </scroller>
+        <text class="name">{{ name }}</text>
         <text class="time">{{ time }}</text>
     </div>
 </template>

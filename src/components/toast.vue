@@ -7,10 +7,27 @@
 <script>
 export default {
     name: 'Toast',
-    props: {
-        text: { type: String, required: true },
-        show: { type: Boolean, default: false }
+    data() {
+        return {
+            show: false,
+            text: ''
+        }
     },
+    created() {
+        this.onToast = (e) => {
+            this.text = e.data.text;
+            this.show = true;
+
+            setTimeout(() => {
+                this.show = false;
+            }, 1000);
+        }
+
+        $falcon.on('toast', this.onToast);
+    },
+    beforeDestroy() {
+        $falcon.off('toast', this.onToast);
+    }
 }
 </script>
 
@@ -20,7 +37,7 @@ export default {
 .toast {
     position: fixed;
     width: 100%;
-    height: 20vh;
+    height: 22vh;
     left: 0;
     bottom: 0;
     background-color: @primary;
@@ -36,6 +53,6 @@ export default {
 
 .toast-text {
     color: @on-primary;
-    font-size: 8vh;
+    font-size: 10vh;
 }
 </style>

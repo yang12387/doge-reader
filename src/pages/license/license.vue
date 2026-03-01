@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <ButtonColumn>
-            <IconButton class="button" :icon="require('../../assets/back.png')" @click="back" />
+            <IconButton class="button" :icon="require('../../assets/back.png?base64')" @click="back" />
         </ButtonColumn>
         <scroller style="flex: 1;" over-scroll="50px" over-fling="50px">
             <text class="title">许可证</text>

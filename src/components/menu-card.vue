@@ -34,8 +34,4 @@ export default {
     color: @on-neutral;
     font-size: 10vh;
 }
-
-.active .text {
-    color: @on-primary;
-}
 </style>

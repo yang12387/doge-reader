@@ -5,8 +5,6 @@
 //
 //
 //
-//
-//
 
 var script = {
     name: "HistoryCard",
@@ -49,18 +47,9 @@ var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
         return _vm.$emit('click')
       }
     }
-  }, [_c('scroller', {
-    attrs: {
-      "scrollDirection": "horizontal"
-    },
-    on: {
-      "click": function($event) {
-        return _vm.$emit('click')
-      }
-    }
   }, [_c('text', {
     staticClass: ["name"]
-  }, [_vm._v(_vm._s(_vm.name))])]), _c('text', {
+  }, [_vm._v(_vm._s(_vm.name))]), _c('text', {
     staticClass: ["time"]
   }, [_vm._v(_vm._s(_vm.time))])])
 };

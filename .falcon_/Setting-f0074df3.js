@@ -8,8 +8,9 @@ function getNow() {
     const day = String(now.getDate()).padStart(2, '0');
     const hours = String(now.getHours()).padStart(2, '0');
     const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
 
-    return `${year}-${month}-${day} ${hours}:${minutes}`;
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
 
 class Setting {
@@ -87,18 +88,18 @@ class Setting {
         }
     }
 
-    async setFont(larger) {
-        if (larger === true || larger === false) {
-            await this._set('font', larger);
+    async setLargerFont(isLarger) {
+        if (isLarger === true || isLarger === false) {
+            await this._set('isLarger', isLarger);
         }
     }
 
-    async isLargeFont() {
-        if (await this._get('font') === null) {
-            await this._set('font', false);
+    async isLargerFont() {
+        if (await this._get('isLarger') === null) {
+            await this._set('isLarger', false);
             return false;
         } else {
-            return await this._get('font');
+            return await this._get('isLarger');
         }
     }
 }

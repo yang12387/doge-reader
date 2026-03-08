@@ -6,7 +6,7 @@
 
 <script>
 export default {
-    name: 'IconButton',
+    name: 'PrimaryIconButton',
     props: {
         icon: { type: String, required: true }
     },
@@ -22,7 +22,7 @@ export default {
     border-radius: 7vh;
     justify-content: center;
     align-items: center;
-    background-color: @neutral;
+    background-color: @primary;
 }
 
 .button:active {

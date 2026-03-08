@@ -29,13 +29,15 @@ export default {
 @import "../styles/md-color.less";
 
 .toggle {
-    height: 20vh;
+    position: relative;
     width: 32vh;
+    height: 18vh;
 }
 
 .track {
     position: absolute;
-    top: 4vh;
+    top: 3vh;
+    left: 0;
     width: 100%;
     height: 12vh;
     border-radius: 6vh;
@@ -43,9 +45,13 @@ export default {
     transition: background-color 0.15s ease-in-out;
 }
 
+.track-on {
+    background-color: @primary;
+}
+
 .thumb {
     position: absolute;
-    top: 2vh;
+    top: 1vh;
     left: 2vh;
     width: 16vh;
     height: 16vh;
@@ -54,12 +60,8 @@ export default {
     transition: all 0.15s ease-in-out;
 }
 
-.track-on {
-    background-color: @primary;
-}
-
 .thumb-on {
-    left: 18vh;
+    transform: translateX(14vh);
     background-color: @on-primary;
 }
 </style>

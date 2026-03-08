@@ -1,5 +1,5 @@
-import { B as ButtonColumn, I as IconButton, _ as __$_require_assets_back_png_base64__ } from './back-d53c5241.js';
-import { S as Setting } from './Setting-07631832.js';
+import { B as ButtonColumn, I as IconButton, _ as __$_require_assets_back_png_base64__ } from './back-aa1a3b26.js';
+import { S as Setting } from './Setting-f0074df3.js';
 import 'storage';
 
 //
@@ -88,33 +88,31 @@ var SettingCard = _exports$2;
 var script$1 = {
     name: 'Toggle',
     props: {
-        modelValue: { type: Boolean, default: false } // v-model
+        defaultValue: { type: Boolean, default: false }
     },
-    computed: {
-        checked: {
-            get() {
-                return this.modelValue
-            },
-            set(val) {
-                this.$emit('update:modelValue', val);
-            }
+    data() {
+        return {
+            checked: this.defaultValue
         }
     },
     methods: {
         toggle() {
             this.checked = !this.checked;
+            this.$emit('click', this.checked);
         }
     }
 };
 
 var style_0$1 = { "_": {
   "toggle": {
-    "height": "20vh",
-    "width": "32vh"
+    "position": "relative",
+    "width": "32vh",
+    "height": "18vh"
   },
   "track": {
     "position": "absolute",
-    "top": "4vh",
+    "top": "3vh",
+    "left": 0,
     "width": "100%",
     "height": "12vh",
     "borderRadius": "6vh",
@@ -135,9 +133,12 @@ var style_0$1 = { "_": {
       "timingFunction": "ease-in-out"
     }
   },
+  "track-on": {
+    "backgroundColor": "#004a77"
+  },
   "thumb": {
     "position": "absolute",
-    "top": "2vh",
+    "top": "1vh",
     "left": "2vh",
     "width": "16vh",
     "height": "16vh",
@@ -147,11 +148,8 @@ var style_0$1 = { "_": {
     "transitionDuration": 150,
     "transitionTimingFunction": "ease-in-out"
   },
-  "track-on": {
-    "backgroundColor": "#004a77"
-  },
   "thumb-on": {
-    "left": "18vh",
+    "transform": "translateX(14vh)",
     "backgroundColor": "#c2e7ff"
   }
 } };
@@ -208,7 +206,9 @@ var script = {
     },
     data() {
         return {
-            scroll: false
+            loading: true,
+            isScroll: false,
+            isLarger: false
         }
     },
     methods: {
@@ -217,11 +217,18 @@ var script = {
         },
         onShow() {
             setting.getMode().then(mode => {
-                this.scroll = mode === 'scroll';
+                this.isScroll = mode === 'scroll';
+                this.loading = false;
+            });
+            setting.isLargerFont().then(larger => {
+                this.isLarger = larger;
             });
         },
         switchMode(checked) {
             setting.setMode(checked ? 'scroll' : 'page');
+        },
+        switchFontSize(checked) {
+            setting.setLargerFont(checked);
         }
     }
 };
@@ -255,7 +262,7 @@ var style_0 = { "_": {
     "opacity:active": 0.6
   },
   "card": {
-    "marginRight": "4vh"
+    "marginRight": "6vh"
   }
 } };
 
@@ -287,18 +294,27 @@ var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
       "item": "启用滚动翻页",
       "desc": "在阅读界面通过上下滚动浏览整个章节"
     }
-  }, [_c('Toggle', {
+  }, [(!_vm.loading) ? _c('Toggle', {
+    attrs: {
+      "defaultValue": _vm.isScroll
+    },
     on: {
       "click": _vm.switchMode
-    },
-    model: {
-      value: (_vm.scroll),
-      callback: function($$v) {
-        _vm.scroll = $$v;
-      },
-      expression: "scroll"
     }
-  })], 1)], 1)], 1)
+  }) : _vm._e()], 1), _c('SettingCard', {
+    staticClass: ["card"],
+    attrs: {
+      "item": "更大的字体",
+      "desc": "将字体放大到默认的约1.5倍"
+    }
+  }, [(!_vm.loading) ? _c('Toggle', {
+    attrs: {
+      "defaultValue": _vm.isLarger
+    },
+    on: {
+      "click": _vm.switchFontSize
+    }
+  }) : _vm._e()], 1)], 1)], 1)
 };
 
 var staticRenderFns=[];

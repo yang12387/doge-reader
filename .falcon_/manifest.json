@@ -8,17 +8,17 @@
     "bigNum": false
   },
   "cert": {
-    "Setting-07631832.js": {
-      "size": 2549,
-      "md5": "e6228f11c1d2b71715852622190e752d"
+    "Setting-f0074df3.js": {
+      "size": 2654,
+      "md5": "6aa5b950495e6996d77c89054714af3d"
     },
     "app.js": {
       "size": 6091,
       "md5": "b0505c792802ffceed47205ea436eeb7"
     },
-    "back-d53c5241.js": {
-      "size": 3475,
-      "md5": "733fdcc4df611ad9f131a7b3cfcad43c"
+    "back-aa1a3b26.js": {
+      "size": 3385,
+      "md5": "4538ac3645ef0c8fb545475ef4892b78"
     },
     "delete-73cf201b.js": {
       "size": 2215,
@@ -26,11 +26,11 @@
     },
     "favorite.js": {
       "size": 3597,
-      "md5": "5ce6fa11429d27332de654dcb3c85a5a"
+      "md5": "0b45ba9cb2c8d84d3247e1fb3d6c73b4"
     },
     "filemanager.js": {
       "size": 17488,
-      "md5": "87b92898f4edb728dc557328f8ee67d4"
+      "md5": "5bb104d89f9593f18f1738356aa7260b"
     },
     "history-card-83d1effb.js": {
       "size": 1512,
@@ -38,27 +38,27 @@
     },
     "history.js": {
       "size": 3574,
-      "md5": "61fd0fecd93d156795cae0176bdae428"
+      "md5": "2ac0c8b6141d272627aa6939c073d7ee"
     },
     "index.js": {
-      "size": 33964,
-      "md5": "c0e062cbe9253acdfb8644cf6bb2faf4"
+      "size": 34330,
+      "md5": "c6fade22ff09e5bc241752533d422cde"
     },
     "info.js": {
       "size": 700827,
-      "md5": "8368e92844f9650216390288dbca70af"
+      "md5": "fc09950b732a5dceaf8d71b038e8e99a"
     },
     "license.js": {
       "size": 2614,
-      "md5": "3092a58d1c9439f14aca7e08e8ede654"
+      "md5": "cddc956506ac5f2cbef335ac0edf73f1"
     },
     "reader.js": {
-      "size": 25679,
-      "md5": "cc35c3a64bfdaa11cb764fa3848606a8"
+      "size": 28233,
+      "md5": "59b7c79a76c800d243aaf6f4680d6c10"
     },
     "setting.js": {
-      "size": 6629,
-      "md5": "aad7883ac1030ed3c0259401d727931e"
+      "size": 7150,
+      "md5": "e31efc8e1da21b63968be79623ba013b"
     },
     "assets/license.txt": {
       "size": 34523,

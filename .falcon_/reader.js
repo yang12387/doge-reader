@@ -1,7 +1,143 @@
-import { B as ButtonColumn, I as IconButton, _ as __$_require_assets_back_png_base64__ } from './back-d53c5241.js';
+import { B as ButtonColumn, I as IconButton, _ as __$_require_assets_back_png_base64__ } from './back-aa1a3b26.js';
 import fs from 'fs';
-import { S as Setting } from './Setting-07631832.js';
+import { S as Setting } from './Setting-f0074df3.js';
 import 'storage';
+
+//
+//
+//
+//
+//
+//
+//
+//
+
+var script$3 = {
+    name: 'Drawer',
+    data() {
+        return {
+            showDrawer: false
+        }
+    },
+    created() {
+        this.onDrawer = (e) => {
+            this.showDrawer = e.data.show;
+        };
+
+        $falcon.on('drawer', this.onDrawer);
+    },
+    beforeDestroy() {
+        $falcon.off('drawer', this.onDrawer);
+    },
+    methods: {
+        closeDrawer() {
+            this.showDrawer = false;
+        }
+    }
+};
+
+var style_0$3 = { "_": {
+  "container": {
+    "width": "100vw",
+    "height": "100vh",
+    "flexDirection": "row"
+  },
+  "title": {
+    "marginTop": "10vh",
+    "marginBottom": "8vh",
+    "color": "#8e918f",
+    "fontSize": "12vh",
+    "lineHeight": "15vh"
+  },
+  "loading": {
+    "fontSize": "12vh",
+    "textAlign": "center",
+    "color": "#8e918f"
+  },
+  "link": {
+    "marginTop": 0,
+    "marginRight": "1vh",
+    "marginBottom": 0,
+    "marginLeft": "1vh",
+    "color": "#0842a0",
+    "fontSize": "10vh",
+    "textDecoration": "underline",
+    "opacity:active": 0.6
+  },
+  "mask": {
+    "position": "absolute",
+    "top": 0,
+    "right": 0,
+    "width": 0,
+    "height": "100vh",
+    "backgroundColor": "rgba(0,0,0,0.4)"
+  },
+  "mask-open": {
+    "width": "100vw"
+  },
+  "drawer": {
+    "position": "absolute",
+    "right": 0,
+    "top": 0,
+    "width": "80vw",
+    "height": "100vh",
+    "paddingTop": 0,
+    "paddingRight": "8vh",
+    "paddingBottom": 0,
+    "paddingLeft": "18vh",
+    "backgroundColor": "#080a0c",
+    "transform": "translateX(100%)",
+    "transitionProperty": "transform",
+    "transitionDuration": 300,
+    "transitionTimingFunction": "ease-in-out"
+  },
+  "@TRANSITION": {
+    "drawer": {
+      "property": "transform",
+      "duration": 300,
+      "timingFunction": "ease-in-out"
+    }
+  },
+  "drawer-open": {
+    "transform": "translateX(0)"
+  }
+} };
+
+var render$3 = function (){
+var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["mask"],
+    class: {
+      'mask-open': _vm.showDrawer
+    },
+    on: {
+      "click": _vm.closeDrawer
+    }
+  }, [_c('div', {
+    staticClass: ["drawer"],
+    class: {
+      'drawer-open': _vm.showDrawer
+    }
+  }, [_vm._t("default")], 2)])
+};
+
+var staticRenderFns$3=[];
+render$3._withStripped = true;
+  
+const __file$3 = 'src/components/drawer.vue';
+const _scopeId$3 = 'data-v-e3143afe';
+
+const _exports$3 = script$3;
+
+_exports$3.render = render$3;
+_exports$3.staticRenderFns = staticRenderFns$3;
+_exports$3._compiled = true;
+_exports$3._scopeId = _scopeId$3;
+_exports$3.themes = {};
+_exports$3.style = Object.assign({}, style_0$3['_']);
+_exports$3.__file = __file$3;
+
+var Drawer = _exports$3;
 
 //
 //
@@ -450,15 +586,11 @@ class Reader {
         this.render(this.offset);
     }
 
-    setFont(vh) { this.fontSize = vh; this.render(this.offset); }
-    setLine(vh) { this.lineHeight = vh; this.render(this.offset); }
-    setViewport(w, h) { this.viewportWidth = w; this.viewportHeight = h; this.render(this.offset); }
-    setMode(mode) { this.mode = mode; this.render(this.offset); }
-
     getProgress() { return { chapterIndex: this.chapterIndex, offset: this.offset }; }
     setProgress(p) { if (!p) return; this.go(p.chapterIndex || 0, p.offset || 0); }
 }
 
+//
 //
 //
 //
@@ -511,22 +643,25 @@ var script = {
         IconButton,
         MenuCard,
         Toast,
+        Drawer
     },
     data() {
         return {
             loading: true,
-            showMenu: false,
             reader: null,
+            isLarger: false
         }
     },
     async created() {
         const parser = new BookParser(this.$page.options.path);
         const book = await parser.load();
 
+        this.isLarger = await setting.isLargerFont();
+
         this.reader = new Reader(book, {
             mode: await setting.getMode() || 'page',
-            fontSize: 10,
-            lineHeight: 14,
+            fontSize: this.isLarger ? 12 : 10,
+            lineHeight: this.isLarger ? 16: 14,
             viewportWidth: w - 0.39 * h,
             viewportHeight: h
         });
@@ -542,40 +677,49 @@ var script = {
         }
 
         this.loading = false;
-},
-methods: {
-    back() {
-        this.$page.finish();
     },
-    love() {
-        setting.addItem(this.$page.options.path, this.reader.getProgress(), 'favorite').then(() => {
-            $falcon.trigger('toast', { text: '书签已保存' });
-        });
-    },
-    prev() {
-        this.reader.prev();
-    },
-    next() {
-        this.reader.next();
-    },
-    prevChapter() {
-        this.reader.prevChapter();
-    },
-    nextChapter() {
-        this.reader.nextChapter();
-        this.$page.$dom.scrollToElement(this.$refs['target'], { offset: 0 });
-    },
-    switchMenu() {
-        this.showMenu = !this.showMenu;
-    },
-    loadChapter(index) {
-        this.reader.loadChapter(index);
-        this.showMenu = false;
-    },
-    onHide() {
-        setting.addItem(this.$page.options.path, this.reader.getProgress());
-    },
-}
+    methods: {
+        back() {
+            this.$page.finish();
+        },
+        love() {
+            setting.addItem(this.$page.options.path, this.reader.getProgress(), 'favorite').then(() => {
+                $falcon.trigger('toast', { text: '书签已保存' });
+            });
+        },
+        prev() {
+            this.reader.prev();
+        },
+        next() {
+            this.reader.next();
+        },
+        prevChapter() {
+            this.reader.prevChapter();
+            this.loading = true;
+            this.$page.$dom.scrollToElement(this.$refs['end'], { offset: 0 });
+            setTimeout(() => {
+                this.loading = false;
+            }, 500);
+        },
+        nextChapter() {
+            this.reader.nextChapter();
+            this.loading = true;
+            this.$page.$dom.scrollToElement(this.$refs['start'], { offset: 0 });
+            setTimeout(() => {
+                this.loading = false;
+            }, 500);
+        },
+        openMenu() {
+            $falcon.trigger('drawer', { show: true });
+        },
+        loadChapter(index) {
+            this.reader.loadChapter(index);
+            $falcon.trigger('drawer', { show: false });
+        },
+        onHide() {
+            setting.addItem(this.$page.options.path, this.reader.getProgress());
+        },
+    }
 };
 
 var style_0 = { "_": {
@@ -618,6 +762,10 @@ var style_0 = { "_": {
     "marginTop": "1.5vh",
     "color": "#e3e3e3"
   },
+  "content-larger": {
+    "fontSize": "12vh",
+    "lineHeight": "16vh"
+  },
   "prev": {
     "position": "absolute",
     "width": "50%",
@@ -632,59 +780,13 @@ var style_0 = { "_": {
     "top": 0,
     "left": "50%"
   },
-  "mask": {
-    "position": "absolute",
-    "top": 0,
-    "left": 0,
-    "width": 0,
-    "height": "100vh",
-    "backgroundColor": "rgba(0,0,0,0.4)"
-  },
-  "mask-open": {
-    "width": "100vw"
-  },
-  "menu": {
-    "position": "absolute",
-    "right": 0,
-    "top": 0,
-    "width": "80vw",
-    "height": "100vh",
-    "paddingTop": "8vh",
-    "paddingRight": "8vh",
-    "paddingBottom": "8vh",
-    "paddingLeft": "18vh",
-    "backgroundColor": "#080a0c",
-    "transform": "translateX(100%)",
-    "transitionProperty": "transform",
-    "transitionDuration": 300,
-    "transitionTimingFunction": "ease-in-out"
-  },
-  "@TRANSITION": {
-    "menu": {
-      "property": "transform",
-      "duration": 300,
-      "timingFunction": "ease-in-out"
-    }
-  },
-  "menu-open": {
-    "transform": "translateX(0)"
-  },
-  "menu-scroller": {
-    "height": "100%"
-  },
   "lower-title": {
+    "marginTop": "8vh",
+    "marginRight": 0,
     "marginBottom": "6vh",
+    "marginLeft": 0,
     "fontSize": "10vh",
     "color": "#8e918f"
-  },
-  "button-line": {
-    "flexDirection": "row",
-    "justifyContent": "space-between",
-    "alignItems": "center",
-    "marginTop": "8vh",
-    "marginRight": "8vh",
-    "marginBottom": "8vh",
-    "marginLeft": 0
   }
 } };
 
@@ -720,18 +822,33 @@ var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
       "icon": __$_require_assets_menu_png_base64__
     },
     on: {
-      "click": _vm.switchMenu
+      "click": _vm.openMenu
     }
-  })], 1), (_vm.loading) ? _c('div', {
+  })], 1), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.loading),
+      expression: "loading"
+    }],
     staticClass: ["loading-area"]
   }, [_c('text', {
     staticClass: ["loading"]
-  }, [_vm._v("少女祈祷中...")])]) : (_vm.reader.mode === 'page') ? _c('div', {
+  }, [_vm._v("少女祈祷中...")])]), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.reader.mode === 'page' && !_vm.loading),
+      expression: "reader.mode === 'page' && !loading"
+    }],
     staticStyle: {
       flex: "1"
     }
   }, [_c('text', {
-    staticClass: ["content"]
+    staticClass: ["content"],
+    class: {
+      'content-larger': _vm.isLarger
+    }
   }, [_vm._v(_vm._s(_vm.reader.content))]), _c('div', {
     staticClass: ["prev"],
     on: {
@@ -742,7 +859,13 @@ var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
     on: {
       "click": _vm.next
     }
-  })]) : (_vm.reader.mode === 'scroll') ? _c('scroller', {
+  })]), _c('scroller', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.reader.mode === 'scroll' && !_vm.loading),
+      expression: "reader.mode === 'scroll' && !loading"
+    }],
     staticStyle: {
       flex: "1"
     },
@@ -754,11 +877,10 @@ var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
     staticStyle: {
       minHeight: "100vh"
     }
-  }, [_c('text', {
-    ref: "target",
-    staticClass: ["content"]
-  }, [_vm._v(_vm._s(_vm.reader.content))]), _c('div', {
-    staticClass: ["button-line"]
+  }, [_c('div', {
+    staticStyle: {
+      margin: "8vh 0 8vh 0"
+    }
   }, [_c('IconButton', {
     attrs: {
       "icon": __$_require_assets_back_png_base64__
@@ -766,28 +888,33 @@ var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
     on: {
       "click": _vm.prevChapter
     }
-  }), _c('IconButton', {
+  })], 1), _c('text', {
+    ref: "start",
+    staticClass: ["content"],
+    class: {
+      'content-larger': _vm.isLarger
+    }
+  }, [_vm._v(_vm._s(_vm.reader.content))]), _c('div', {
+    ref: "end",
+    staticStyle: {
+      margin: "8vh 6vh 8vh 0",
+      alignItems: "flex-end"
+    }
+  }, [_c('IconButton', {
     attrs: {
       "icon": __$_require_assets_next_png_base64__
     },
     on: {
       "click": _vm.nextChapter
     }
-  })], 1)])]) : _vm._e()], 1), _c('div', {
-    staticClass: ["mask"],
-    class: {
-      'mask-open': _vm.showMenu
+  })], 1)])])], 1), _c('Drawer', [_c('scroller', {
+    staticStyle: {
+      height: "100%"
     },
-    on: {
-      "click": _vm.switchMenu
+    attrs: {
+      "overScroll": "50px",
+      "overFling": "50px"
     }
-  }), (!_vm.loading) ? _c('div', {
-    staticClass: ["menu"],
-    class: {
-      'menu-open': _vm.showMenu
-    }
-  }, [_c('scroller', {
-    staticClass: ["menu-scroller"]
   }, [_c('text', {
     staticClass: ["lower-title"]
   }, [_vm._v("章节")]), _vm._l((_vm.reader.book.getChapterCount() - 1), function(index) {
@@ -803,7 +930,7 @@ var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
         }
       }
     })
-  })], 2)]) : _vm._e(), _c('Toast')], 1)
+  })], 2)]), _c('Toast')], 1)
 };
 
 var staticRenderFns=[];

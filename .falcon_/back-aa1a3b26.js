@@ -70,8 +70,7 @@ var ButtonColumn = _exports$1;
 var script = {
     name: 'IconButton',
     props: {
-        icon: { type: String, required: true },
-        color: { type: String, required: false, default: '#1a1b1f' },
+        icon: { type: String, required: true }
     },
 };
 
@@ -82,6 +81,7 @@ var style_0 = { "_": {
     "borderRadius": "7vh",
     "justifyContent": "center",
     "alignItems": "center",
+    "backgroundColor": "#1a1b1f",
     "opacity:active": 0.6
   },
   "icon": {
@@ -94,9 +94,6 @@ var render = function (){
 var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: ["button"],
-    style: {
-      backgroundColor: _vm.color
-    },
     on: {
       "click": function($event) {
         return _vm.$emit('click')

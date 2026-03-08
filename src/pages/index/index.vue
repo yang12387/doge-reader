@@ -12,7 +12,8 @@
             </div>
             <div class="content">
                 <div class="cards-area">
-                    <HistoryCard v-for="(item, index) in history.slice(-2)" :key="index" :item="item"
+                    <text v-show="history.length === 0" class="loading" style="transform: translateY(22vh);">什么也没有喵...</text>
+                    <HistoryCard v-for="(item, index) in historyList" :key="index" :item="item"
                         :name="item.path.split('/').pop()" time="" @click="open(item.path, item.progress)" />
                 </div>
                 <MainButton class="main-button" :icon="require('../../assets/folder.png?base64')" text="本地文件"
@@ -45,6 +46,11 @@ export default {
     data() {
         return {
             history: []
+        }
+    },
+    computed: {
+        historyList() {
+            return this.history.slice(-2).reverse();
         }
     },
     methods: {
@@ -87,7 +93,6 @@ export default {
     flex: 2;
     justify-content: space-between;
     padding-bottom: 3vh;
-    flex-direction: column-reverse;
 }
 
 .main-button {

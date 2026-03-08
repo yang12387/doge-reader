@@ -149,11 +149,6 @@ export default class Reader {
         this.render(this.offset);
     }
 
-    setFont(vh) { this.fontSize = vh; this.render(this.offset); }
-    setLine(vh) { this.lineHeight = vh; this.render(this.offset); }
-    setViewport(w, h) { this.viewportWidth = w; this.viewportHeight = h; this.render(this.offset); }
-    setMode(mode) { this.mode = mode; this.render(this.offset); }
-
     getProgress() { return { chapterIndex: this.chapterIndex, offset: this.offset }; }
     setProgress(p) { if (!p) return; this.go(p.chapterIndex || 0, p.offset || 0); }
 }

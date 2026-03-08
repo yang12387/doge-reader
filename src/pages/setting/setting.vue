@@ -6,7 +6,10 @@
         <scroller style="flex: 1;" show-scrollbar="false" over-scroll="50px" over-fling="50px">
             <text class="title">设置</text>
             <SettingCard class="card" item="启用滚动翻页" desc="在阅读界面通过上下滚动浏览整个章节">
-                <Toggle v-model="scroll" @click="switchMode" />
+                <Toggle v-if="!loading" :defaultValue="isScroll" @click="switchMode" />
+            </SettingCard>
+            <SettingCard class="card" item="更大的字体" desc="将字体放大到默认的约1.5倍">
+                <Toggle v-if="!loading" :defaultValue="isLarger" @click="switchFontSize" />
             </SettingCard>
         </scroller>
     </div>
@@ -32,7 +35,9 @@ export default {
     },
     data() {
         return {
-            scroll: false
+            loading: true,
+            isScroll: false,
+            isLarger: false
         }
     },
     methods: {
@@ -41,11 +46,18 @@ export default {
         },
         onShow() {
             setting.getMode().then(mode => {
-                this.scroll = mode === 'scroll';
-            })
+                this.isScroll = mode === 'scroll';
+                this.loading = false;
+            });
+            setting.isLargerFont().then(larger => {
+                this.isLarger = larger;
+            });
         },
         switchMode(checked) {
             setting.setMode(checked ? 'scroll' : 'page')
+        },
+        switchFontSize(checked) {
+            setting.setLargerFont(checked);
         }
     }
 }
@@ -56,6 +68,6 @@ export default {
 @import "../../styles/common.less";
 
 .card {
-    margin-right: 4vh;
+    margin-right: 6vh;
 }
 </style>

@@ -1,6 +1,6 @@
-import { B as ButtonColumn, I as IconButton, _ as __$_require_assets_back_png_base64__ } from './back-d53c5241.js';
+import { B as ButtonColumn, I as IconButton, _ as __$_require_assets_back_png_base64__ } from './back-aa1a3b26.js';
 import { H as HistoryCard } from './history-card-83d1effb.js';
-import { S as Setting } from './Setting-07631832.js';
+import { S as Setting } from './Setting-f0074df3.js';
 import 'storage';
 
 //
@@ -98,6 +98,11 @@ var script = {
             history: []
         }
     },
+    computed: {
+        historyList() {
+            return this.history.slice(-2).reverse();
+        }
+    },
     methods: {
         openLink(link) {
             $falcon.navTo(link);
@@ -158,8 +163,7 @@ var style_0 = { "_": {
   "cards-area": {
     "flex": 2,
     "justifyContent": "space-between",
-    "paddingBottom": "3vh",
-    "flexDirection": "column-reverse"
+    "paddingBottom": "3vh"
   },
   "main-button": {
     "flex": 1,
@@ -232,7 +236,18 @@ var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
     staticClass: ["content"]
   }, [_c('div', {
     staticClass: ["cards-area"]
-  }, _vm._l((_vm.history.slice(-2)), function(item, index) {
+  }, [_c('text', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.history.length === 0),
+      expression: "history.length === 0"
+    }],
+    staticClass: ["loading"],
+    staticStyle: {
+      transform: "translateY(22vh)"
+    }
+  }, [_vm._v("什么也没有喵...")]), _vm._l((_vm.historyList), function(item, index) {
     return _c('HistoryCard', {
       key: index,
       attrs: {
@@ -246,7 +261,7 @@ var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
         }
       }
     })
-  }), 1), _c('MainButton', {
+  })], 2), _c('MainButton', {
     staticClass: ["main-button"],
     attrs: {
       "icon": __$_require_assets_folder_png_base64__,

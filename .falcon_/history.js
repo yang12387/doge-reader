@@ -1,6 +1,6 @@
-import { B as ButtonColumn, I as IconButton, _ as __$_require_assets_back_png_base64__ } from './back-d53c5241.js';
+import { B as ButtonColumn, I as IconButton, _ as __$_require_assets_back_png_base64__ } from './back-aa1a3b26.js';
 import { H as HistoryCard } from './history-card-83d1effb.js';
-import { S as Setting } from './Setting-07631832.js';
+import { S as Setting } from './Setting-f0074df3.js';
 import { _ as __$_require_assets_delete_png_base64__ } from './delete-73cf201b.js';
 import 'storage';
 

@@ -33,7 +33,7 @@ export default {
 
 .item-text {
     color: @on-neutral;
-    font-size: 12vh;
+    font-size: 11vh;
 }
 
 .desc-text {

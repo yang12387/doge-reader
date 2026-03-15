@@ -1,5 +1,6 @@
 <template>
-    <div class="mask" :class="{ 'mask-open': showDrawer }" @click="closeDrawer">
+    <div class="wrapper">
+        <div class="mask" v-if="showDrawer" @click="closeDrawer" />
         <div class="drawer" :class="{ 'drawer-open': showDrawer }">
             <slot />
         </div>
@@ -36,17 +37,21 @@ export default {
 @import "../styles/common.less";
 @import "../styles/md-color.less";
 
+.wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+}
+
 .mask {
     position: absolute;
     top: 0;
     right: 0;
-    width: 0;
+    width: 100vw;
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.4);
-}
-
-.mask-open {
-    width: 100vw;
 }
 
 .drawer {

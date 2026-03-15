@@ -8,57 +8,57 @@
     "bigNum": false
   },
   "cert": {
-    "Setting-f0074df3.js": {
-      "size": 2654,
-      "md5": "6aa5b950495e6996d77c89054714af3d"
+    "Setting-f0074df3.js.bin": {
+      "size": 1696,
+      "md5": "0a988a57bec7b997e7e441bf3f39e1f6"
     },
-    "app.js": {
-      "size": 6091,
-      "md5": "b0505c792802ffceed47205ea436eeb7"
+    "app.js.bin": {
+      "size": 3610,
+      "md5": "958eae5edd12e6de6fd29c9d3fba33fe"
     },
-    "back-aa1a3b26.js": {
-      "size": 3385,
-      "md5": "4538ac3645ef0c8fb545475ef4892b78"
+    "back-aa1a3b26.js.bin": {
+      "size": 2428,
+      "md5": "5b3103de9ee51e19683e56de7dd203cd"
     },
-    "delete-73cf201b.js": {
-      "size": 2215,
-      "md5": "beb281e433663c62f34c030ea4afcb77"
+    "delete-73cf201b.js.bin": {
+      "size": 2157,
+      "md5": "596e31b014671d341501eadab70661bb"
     },
-    "favorite.js": {
-      "size": 3597,
-      "md5": "0b45ba9cb2c8d84d3247e1fb3d6c73b4"
+    "favorite.js.bin": {
+      "size": 2481,
+      "md5": "e55713f12dc434739747716358799d00"
     },
-    "filemanager.js": {
-      "size": 17488,
-      "md5": "5bb104d89f9593f18f1738356aa7260b"
+    "filemanager.js.bin": {
+      "size": 14538,
+      "md5": "d73f2d6583841798217ffbc799f7c2cc"
     },
-    "history-card-83d1effb.js": {
-      "size": 1512,
-      "md5": "b3454442d5377ed0e8b9f12fe2611959"
+    "history-card-83d1effb.js.bin": {
+      "size": 1143,
+      "md5": "9d7582eb822b2c606259fb3449a2472e"
     },
-    "history.js": {
-      "size": 3574,
-      "md5": "2ac0c8b6141d272627aa6939c073d7ee"
+    "history.js.bin": {
+      "size": 2469,
+      "md5": "ed6c4516ec6902e24a95d4a39f28d245"
     },
-    "index.js": {
-      "size": 34330,
-      "md5": "c6fade22ff09e5bc241752533d422cde"
+    "index.js.bin": {
+      "size": 31551,
+      "md5": "bb2ec3981967f86cab9646264fb45d16"
     },
-    "info.js": {
-      "size": 700827,
-      "md5": "fc09950b732a5dceaf8d71b038e8e99a"
+    "info.js.bin": {
+      "size": 698763,
+      "md5": "7e4aa6515355eb62a71d0e19128ac042"
     },
-    "license.js": {
-      "size": 2614,
-      "md5": "cddc956506ac5f2cbef335ac0edf73f1"
+    "license.js.bin": {
+      "size": 1835,
+      "md5": "05c10e9b34cee9114d59f5ad97224019"
     },
-    "reader.js": {
-      "size": 28233,
-      "md5": "59b7c79a76c800d243aaf6f4680d6c10"
+    "reader.js.bin": {
+      "size": 18188,
+      "md5": "90cb4d7c2a3f270a8c9eded84b2b9b4e"
     },
-    "setting.js": {
-      "size": 7150,
-      "md5": "e31efc8e1da21b63968be79623ba013b"
+    "setting.js.bin": {
+      "size": 4259,
+      "md5": "6583c8b05f56ab22ec7afb60d1f4c0d5"
     },
     "assets/license.txt": {
       "size": 34523,

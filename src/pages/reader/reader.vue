@@ -15,18 +15,18 @@
                 <div class="next" @click="next" />
             </div>
             <scroller style="flex: 1;" v-else-if="reader.mode === 'scroll'" over-scroll="50px" over-fling="50px">
-                <div style="min-height: 100vh;">
+                <div ref="start" style="min-height: 100vh;">
                     <div style="margin: 8vh 0 8vh 0;">
                         <IconButton :icon="require('../../assets/back.png?base64')" @click="prevChapter" />
                     </div>
-                    <text ref="start" class="content" :class="{ 'content-larger': isLarger }">{{ reader.content }}</text>
+                    <text ref="content" class="content" :class="{ 'content-larger': isLarger }">{{ reader.content }}</text>
                     <div ref="end" style="margin: 8vh 6vh 8vh 0; align-items: flex-end;">
                         <IconButton :icon="require('../../assets/next.png?base64')" @click="nextChapter" />
                     </div>
                 </div>
             </scroller>
         </div>
-        <Drawer>
+        <Drawer v-if="!loading">
             <scroller style="height: 100%;" over-scroll="50px" over-fling="50px">
                 <text class="lower-title">章节</text>
                 <MenuCard :text="reader.book.getChapterName(index)" v-for="index in reader.book.getChapterCount() - 1"
@@ -38,6 +38,7 @@
 </template>
 
 <script>
+const sync_wait_time = 25;
 const env = $falcon.env;
 const w = env.deviceWidth;
 const h = env.deviceHeight;
@@ -79,7 +80,7 @@ export default {
         this.reader = new Reader(book, {
             mode: await setting.getMode() || 'page',
             fontSize: this.isLarger ? 12 : 10,
-            lineHeight: this.isLarger ? 16: 14,
+            lineHeight: this.isLarger ? 16 : 14,
             viewportWidth: w - 0.39 * h,
             viewportHeight: h
         });
@@ -87,12 +88,14 @@ export default {
         if (this.$page.options.progress) {
             this.reader.setProgress(JSON.parse(this.$page.options.progress));
         } else {
-            setting.getItem(this.$page.options.path).then(progress => {
-                if (progress) {
-                    this.reader.setProgress(progress);
-                }
-            });
+            if (await setting.getItem(this.$page.options.path)) {
+                this.reader.setProgress(await setting.getItem(this.$page.options.path));
+            }
         }
+
+        setTimeout(() => {
+            this.$page.$dom.scrollToElement(this.$refs['content'], { offset: this.reader.getOffsetY() })
+        }, sync_wait_time);
 
         this.loading = false;
     },
@@ -113,11 +116,17 @@ export default {
         },
         prevChapter() {
             this.reader.prevChapter();
-            this.$page.$dom.scrollToElement(this.$refs['end'], { offset: 0 })
+
+            setTimeout(() => {
+                this.$page.$dom.scrollToElement(this.$refs['end'], { offset: 0 })
+            }, sync_wait_time);
         },
         nextChapter() {
             this.reader.nextChapter();
-            this.$page.$dom.scrollToElement(this.$refs['start'], { offset: 0 })
+
+            setTimeout(() => {
+                this.$page.$dom.scrollToElement(this.$refs['start'], { offset: 0 })
+            }, sync_wait_time);
         },
         openMenu() {
             $falcon.trigger('drawer', { show: true });
@@ -154,6 +163,7 @@ export default {
 .content-larger {
     font-size: 12vh;
     line-height: 16vh;
+    margin-top: 2.5vh;
 }
 
 .prev,

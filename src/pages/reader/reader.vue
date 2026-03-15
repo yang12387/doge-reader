@@ -93,10 +93,6 @@ export default {
             }
         }
 
-        setTimeout(() => {
-            this.$page.$dom.scrollToElement(this.$refs['content'], { offset: this.reader.getOffsetY() })
-        }, sync_wait_time);
-
         this.loading = false;
     },
     methods: {

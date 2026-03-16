@@ -20,8 +20,8 @@ export default {
 .card {
     margin-bottom: 5vh;
     padding: 6vh 8vh;
-    border-radius: 8vh;
     flex-direction: row;
+    border-radius: 8vh;
     align-items: center;
     background-color: @neutral;
 }

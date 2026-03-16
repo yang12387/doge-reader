@@ -105,7 +105,6 @@ export default class Reader {
             this.chapterIndex = prevIndex;
             this.chapterText = this.book.getChapter(prevIndex);
 
-            // 计算上一章最后一页 offset
             let start = 0, lastStart = 0;
             while (true) {
                 const end = this.render(start);
@@ -119,7 +118,6 @@ export default class Reader {
             return;
         }
 
-        // 当前章节上一页
         let start = 0, lastStart = 0;
         while (start < this.offset) {
             lastStart = start;

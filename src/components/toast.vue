@@ -41,6 +41,7 @@ export default {
     left: 0;
     bottom: 0;
     background-color: @primary;
+    opacity: 0.9;
     justify-content: center;
     align-items: center;
     transform: translateY(100%);

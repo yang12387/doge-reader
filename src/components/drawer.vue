@@ -62,7 +62,6 @@ export default {
     height: 100vh;
     padding: 0 8vh 0 18vh;
     background-color: @surface;
-    border-radius: 14vh 0 0 14vh;
     transform: translateX(100%);
     transition: transform 0.3s ease-in-out;
 }

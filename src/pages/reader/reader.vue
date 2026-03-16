@@ -19,7 +19,8 @@
                     <div style="margin: 8vh 0 8vh 0;">
                         <IconButton :icon="require('../../assets/back.png?base64')" @click="prevChapter" />
                     </div>
-                    <text ref="content" class="content" :class="{ 'content-larger': isLarger }">{{ reader.content }}</text>
+                    <text ref="content" class="content" :class="{ 'content-larger': isLarger }">{{ reader.content
+                        }}</text>
                     <div ref="end" style="margin: 8vh 6vh 8vh 0; align-items: flex-end;">
                         <IconButton :icon="require('../../assets/next.png?base64')" @click="nextChapter" />
                     </div>
@@ -29,8 +30,9 @@
         <Drawer v-if="!loading">
             <scroller style="height: 100%;" over-scroll="50px" over-fling="50px">
                 <text class="lower-title">章节</text>
-                <MenuCard :text="reader.book.getChapterName(index)" v-for="index in reader.book.getChapterCount() - 1"
-                    :key="index" :active="index === reader.chapterIndex" @click="loadChapter(index)" />
+                <MenuCard :ref="`ch-${index}`" :text="reader.book.getChapterName(index)"
+                    v-for="index in reader.book.getChapterCount() - 1" :key="index"
+                    :active="index === reader.chapterIndex" @click="loadChapter(index)" />
             </scroller>
         </Drawer>
         <Toast />
@@ -126,6 +128,8 @@ export default {
         },
         openMenu() {
             $falcon.trigger('drawer', { show: true });
+
+            this.$page.$dom.scrollToElement(this.$refs[`ch-${this.reader.chapterIndex}`], { offset: 0 })
         },
         loadChapter(index) {
             this.reader.loadChapter(index);

@@ -8,7 +8,7 @@
             <text class="title">书签</text>
             <text v-show="favorite.length === 0" class="loading">什么也没有喵...</text>
             <div class="list">
-                <HistoryCard class="card" v-for="(item, index) in favorite" :key="index" :item="item"
+                <HistoryCard class="card" v-for="(item, index) in favorite" :key="index"
                     :name="item.path.split('/').pop()" :time="item.time" @click="open(item.path, item.progress)" />
             </div>
         </scroller>

@@ -42,7 +42,7 @@ export default {
             appName: meta.name,
             info: {
                 '作者': 'adogecheems',
-                '版本': meta.version,
+                '版本': `${meta.version}_pre_release`,
                 '许可证': 'AGPLv3',
                 'GitHub': 'https://github.com/adogecheems/doge-reader',
                 '程序路径': meta.appPath,

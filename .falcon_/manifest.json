@@ -8,25 +8,25 @@
     "bigNum": false
   },
   "cert": {
-    "Setting-f0074df3.js.bin": {
-      "size": 1696,
-      "md5": "0a988a57bec7b997e7e441bf3f39e1f6"
-    },
-    "back-aa1a3b26.js.bin": {
-      "size": 2428,
-      "md5": "5b3103de9ee51e19683e56de7dd203cd"
+    "Setting-326c6764.js.bin": {
+      "size": 1888,
+      "md5": "475a84e007877a03b498dfd369e1ec33"
     },
     "delete-73cf201b.js.bin": {
       "size": 2157,
       "md5": "596e31b014671d341501eadab70661bb"
     },
+    "back-aa1a3b26.js.bin": {
+      "size": 2428,
+      "md5": "5b3103de9ee51e19683e56de7dd203cd"
+    },
+    "favorite.js.bin": {
+      "size": 2470,
+      "md5": "4bac47b1e5075670ab8d770c9ed6a336"
+    },
     "app.js.bin": {
       "size": 3610,
       "md5": "958eae5edd12e6de6fd29c9d3fba33fe"
-    },
-    "favorite.js.bin": {
-      "size": 2481,
-      "md5": "e55713f12dc434739747716358799d00"
     },
     "filemanager.js.bin": {
       "size": 14538,
@@ -37,28 +37,28 @@
       "md5": "9d7582eb822b2c606259fb3449a2472e"
     },
     "history.js.bin": {
-      "size": 2469,
-      "md5": "ed6c4516ec6902e24a95d4a39f28d245"
+      "size": 2458,
+      "md5": "df0221693df867b3a167cafff58ba778"
     },
     "index.js.bin": {
-      "size": 31551,
-      "md5": "bb2ec3981967f86cab9646264fb45d16"
+      "size": 31540,
+      "md5": "891ed5a31202a9a9d8909b195c24024f"
     },
     "info.js.bin": {
-      "size": 698763,
-      "md5": "7e4aa6515355eb62a71d0e19128ac042"
+      "size": 698790,
+      "md5": "99f87212dea089a40f49fdf8f3945824"
     },
     "license.js.bin": {
       "size": 1835,
       "md5": "05c10e9b34cee9114d59f5ad97224019"
     },
     "reader.js.bin": {
-      "size": 18215,
-      "md5": "f5ebd5085be1ea92884035f9f2c99280"
+      "size": 19143,
+      "md5": "4d12881015a7887a40d44d596868b69a"
     },
     "setting.js.bin": {
-      "size": 4259,
-      "md5": "6583c8b05f56ab22ec7afb60d1f4c0d5"
+      "size": 4573,
+      "md5": "b6574bf8d3ffa1b28a603f904bbf27d6"
     },
     "assets/license.txt": {
       "size": 34523,

@@ -9,7 +9,7 @@ export default class Book {
             return '';
         }
 
-        var ch = this.chapters[index];
+        let ch = this.chapters[index];
         return this.text.slice(ch.start, ch.end);
     }
 
@@ -18,7 +18,7 @@ export default class Book {
             return '';
         }
 
-        return this.chapters[index].name;
+        return this.chapters[index].title;
     }
 
     getChapterCount() {

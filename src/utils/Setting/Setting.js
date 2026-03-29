@@ -4,7 +4,7 @@ function getNow() {
     const now = new Date();
 
     const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, '0'); // 月份从0开始
+    const month = String(now.getMonth() + 1).padStart(2, '0');
     const day = String(now.getDate()).padStart(2, '0');
     const hours = String(now.getHours()).padStart(2, '0');
     const minutes = String(now.getMinutes()).padStart(2, '0');
@@ -100,6 +100,21 @@ export default class Setting {
             return false;
         } else {
             return await this._get('isLarger');
+        }
+    }
+
+    async setDebugMode(isDebug) {
+        if (isDebug === true || isDebug === false) {
+            await this._set('isDebug', isDebug);
+        }
+    }
+
+    async isDebugMode() {
+        if (await this._get('isDebug') === null) {
+            await this._set('isDebug', false);
+            return false;
+        } else {
+            return await this._get('isDebug');
         }
     }
 }

@@ -14,13 +14,13 @@
                 <div class="prev" @click="prev" />
                 <div class="next" @click="next" />
             </div>
-            <scroller style="flex: 1;" v-else-if="reader.mode === 'scroll'" over-scroll="50px" over-fling="50px">
-                <div ref="start" style="min-height: 100vh;">
+            <scroller style="flex: 1;" @scroll="setOffsetY" v-else-if="reader.mode === 'scroll'" over-scroll="50px"
+                over-fling="50px">
+                <div ref="start" style="min-height: 100%;">
                     <div style="margin: 8vh 0 8vh 0;">
                         <IconButton :icon="require('../../assets/back.png?base64')" @click="prevChapter" />
                     </div>
-                    <text ref="content" class="content" :class="{ 'content-larger': isLarger }">{{ reader.content
-                        }}</text>
+                    <text class="content" :class="{ 'content-larger': isLarger }">{{ reader.content }}</text>
                     <div ref="end" style="margin: 8vh 6vh 8vh 0; align-items: flex-end;">
                         <IconButton :icon="require('../../assets/next.png?base64')" @click="nextChapter" />
                     </div>
@@ -30,12 +30,22 @@
         <Drawer v-if="!loading">
             <scroller style="height: 100%;" over-scroll="50px" over-fling="50px">
                 <text class="lower-title">章节</text>
-                <MenuCard :ref="`ch-${index}`" :text="reader.book.getChapterName(index)"
-                    v-for="index in reader.book.getChapterCount() - 1" :key="index"
-                    :active="index === reader.chapterIndex" @click="loadChapter(index)" />
+                <MenuCard :text="reader.book.getChapterName(index)" v-for="index in reader.book.getChapterCount() - 1"
+                    :key="index" :active="index === reader.chapterIndex" @click="loadChapter(index)" />
             </scroller>
         </Drawer>
         <Toast />
+        <div v-if="isDebug" style="position: absolute; top: 0; right: 0; padding: 0; background-color: #000000; opacity: 0.7;">
+            <text style="font-size: 6vh; color: white;">
+                mode: {{ reader.mode }},
+                fontSize: {{ reader.fontSize }},
+                lineHeight: {{ reader.lineHeight }},
+                viewPort: {{ reader.viewportWidth }}*{{ reader.viewportHeight }},
+                chapterIndex: {{ reader.chapterIndex }},
+                offset: {{ reader.offset }},
+                offsetY: {{ reader.offsetY }}
+            </text>
+        </div>
     </div>
 </template>
 
@@ -70,7 +80,9 @@ export default {
         return {
             loading: true,
             reader: null,
-            isLarger: false
+            isLarger: false,
+            isListeningScroll: false,
+            isDebug: false
         }
     },
     async created() {
@@ -78,6 +90,7 @@ export default {
         const book = await parser.load();
 
         this.isLarger = await setting.isLargerFont();
+        this.isDebug = await setting.isDebugMode();
 
         this.reader = new Reader(book, {
             mode: await setting.getMode() || 'page',
@@ -96,6 +109,12 @@ export default {
         }
 
         this.loading = false;
+
+        if (this.reader.mode === 'scroll') {
+            this.go('start', this.reader.getOffsetY()).then(() => {
+                this.isListeningScroll = true;
+            })
+        }
     },
     methods: {
         back() {
@@ -114,25 +133,29 @@ export default {
         },
         prevChapter() {
             this.reader.prevChapter();
-
-            setTimeout(() => {
-                this.$page.$dom.scrollToElement(this.$refs['end'], { offset: 0 })
-            }, sync_wait_time);
+            this.go('end');
         },
         nextChapter() {
             this.reader.nextChapter();
-
-            setTimeout(() => {
-                this.$page.$dom.scrollToElement(this.$refs['start'], { offset: 0 })
-            }, sync_wait_time);
+            this.go('start');
         },
         openMenu() {
             $falcon.trigger('drawer', { show: true });
-
-            this.$page.$dom.scrollToElement(this.$refs[`ch-${this.reader.chapterIndex}`], { offset: 0 })
+        },
+        go(ref, offset = 0) {
+            return new Promise(resolve => {
+                setTimeout(() => {
+                    this.$page.$dom.scrollToElement(this.$refs[ref], { offset });
+                    resolve();
+                }, sync_wait_time);
+            });
+        },
+        setOffsetY(event) {
+            if (this.reader.mode !== 'scroll' || !this.isListeningScroll) return;
+            this.reader.setOffsetY(event.contentOffset.y);
         },
         loadChapter(index) {
-            this.reader.loadChapter(index);
+            this.reader.go(index);
             $falcon.trigger('drawer', { show: false });
         },
         onHide() {

@@ -10,34 +10,24 @@ export default class Reader {
         this.chapterIndex = 0;
         this.chapterText = '';
         this.offset = 0;
+        this.offsetY = 0;
         this.content = '';
-        this._pageEndOffset = 0;
 
         if (options.progress) {
-            this.go(
-                options.progress.chapterIndex || 0,
-                options.progress.offset || 0,
-                options.progress.mode
-            );
+            this.setProgress(options.progress);
         } else {
-            this.loadChapter(0);
+            this.go(0);
         }
     }
 
-    loadChapter(index) {
-        if (index < 0 || index >= this.book.chapters.length) return;
-        this.chapterIndex = index;
-        this.chapterText = this.book.getChapter(index);
-        this.offset = 0;
-        this.render(this.offset);
-    }
-
-    go(chapterIndex, offset = 0, mode = this.mode) {
+    go(chapterIndex, offset = 0, offsetY = 0) {
         if (chapterIndex < 0 || chapterIndex >= this.book.chapters.length) return;
-        this.mode = mode;
         this.chapterIndex = chapterIndex;
         this.chapterText = this.book.getChapter(chapterIndex);
-        this.offset = Math.max(0, offset);
+
+        if (this.mode === 'scroll') { this.offsetY = offsetY; this.offset = 0; }
+        else { this.offset = offset; this.offsetY = 0; }
+
         this.render(this.offset);
     }
 
@@ -75,10 +65,9 @@ export default class Reader {
                 i = end;
             }
             if (linesThisPage >= linesPerPage) break;
-            charsProcessed++; // 换行
+            charsProcessed++;
         }
 
-        this._pageEndOffset = charsProcessed;
         this.content = pageText;
         return charsProcessed;
     }
@@ -89,7 +78,7 @@ export default class Reader {
         const endOffset = this.render(this.offset);
 
         if (endOffset >= this.chapterText.length) {
-            this.loadChapter(this.chapterIndex + 1);
+            this.go(this.chapterIndex + 1);
         } else {
             this.offset = endOffset;
             this.render(this.offset);
@@ -101,7 +90,7 @@ export default class Reader {
 
         if (this.offset <= 0) {
             const prevIndex = this.chapterIndex - 1;
-            if (prevIndex < 0) return; // 第一章
+            if (prevIndex < 0) return;
             this.chapterIndex = prevIndex;
             this.chapterText = this.book.getChapter(prevIndex);
 
@@ -129,24 +118,17 @@ export default class Reader {
 
     nextChapter() {
         if (this.chapterIndex >= this.book.chapters.length - 1) return;
-
-        this.chapterIndex++;
-        this.chapterText = this.book.getChapter(this.chapterIndex);
-        this.offset = 0;
-
-        this.render(this.offset);
+        this.go(this.chapterIndex + 1);
     }
 
     prevChapter() {
         if (this.chapterIndex <= 0) return;
-
-        this.chapterIndex--;
-        this.chapterText = this.book.getChapter(this.chapterIndex);
-        this.offset = 0;
-
-        this.render(this.offset);
+        this.go(this.chapterIndex - 1);
     }
 
-    getProgress() { return { chapterIndex: this.chapterIndex, offset: this.offset }; }
-    setProgress(p) { if (!p) return; this.go(p.chapterIndex || 0, p.offset || 0); }
+    getOffsetY() { return this.offsetY; }
+    setOffsetY(y) { this.offsetY = y; }
+
+    getProgress() { return { chapterIndex: this.chapterIndex, offset: this.offset, offsetY: this.offsetY, lineHeight: this.lineHeight }; }
+    setProgress(p) { if (!p) return; this.go(p.chapterIndex || 0, p.offset || 0, this.lineHeight === p.lineHeight ? p.offsetY || 0 : 0); }
 }

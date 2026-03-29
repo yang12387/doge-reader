@@ -17,14 +17,14 @@ export default class BookParser {
 
     _parse() {
         // 更严格的章节识别
-        var regex = /^(第[零一二三四五六七八九十百千万\d]{1,10}[部章回节卷][^\n]{0,40}|序章?|前言|楔子|引子|Chapter\s+[0-9IVXLCDM]+[^\n]{0,40}|Part\s+[0-9IVXLCDM]+[^\n]{0,40}|Prologue|Foreword)\s*$/gim;
+        const regex = /^(第[零一二三四五六七八九十百千万\d]{1,10}[部章回节卷][^\n]{0,40}|序章?|前言|楔子|引子|Chapter\s+[0-9IVXLCDM]+[^\n]{0,40}|Part\s+[0-9IVXLCDM]+[^\n]{0,40}|Prologue|Foreword)\s*$/gim;
 
-        var matches = [];
-        var m;
+        let matches = [];
+        let m;
 
         while ((m = regex.exec(this.text)) !== null) {
 
-            var name = m[0].trim();
+            let name = m[0].trim();
 
             // 排除异常标题
             if (name.length === 0 || name.length > 50) continue;
@@ -41,10 +41,10 @@ export default class BookParser {
             return;
         }
 
-        for (var i = 0; i < matches.length; i++) {
+        for (let i = 0; i < matches.length; i++) {
 
-            var start = matches[i].start;
-            var end = (i + 1 < matches.length)
+            let start = matches[i].start;
+            let end = (i + 1 < matches.length)
                 ? matches[i + 1].start
                 : this.text.length;
 
@@ -74,7 +74,7 @@ export default class BookParser {
         }
 
         // 删除尾部异常空章节
-        var last = this.chapters[this.chapters.length - 1];
+        let last = this.chapters[this.chapters.length - 1];
         if (last.end - last.start < 100) {
             this.chapters.pop();
         }
@@ -82,13 +82,13 @@ export default class BookParser {
 
     _fallback() {
 
-        var size = 3000;
-        var cursor = 0;
-        var index = 1;
+        let size = 3000;
+        let cursor = 0;
+        let index = 1;
 
         while (cursor < this.text.length) {
 
-            var end = cursor + size;
+            let end = cursor + size;
             if (end > this.text.length) end = this.text.length;
 
             if (end - cursor > 100) {

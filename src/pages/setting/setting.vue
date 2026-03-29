@@ -8,8 +8,11 @@
             <SettingCard class="card" item="启用滚动翻页" desc="在阅读界面通过上下滚动浏览整个章节">
                 <Toggle v-if="!loading" :defaultValue="isScroll" @click="switchMode" />
             </SettingCard>
-            <SettingCard class="card" item="更大的字体" desc="将字体放大到默认的约1.5倍">
+            <SettingCard class="card" item="更大的字体" desc="将阅读器字体放大到默认的约1.2倍">
                 <Toggle v-if="!loading" :defaultValue="isLarger" @click="switchFontSize" />
+            </SettingCard>
+            <SettingCard class="card" item="启用调试模式" desc="在阅读界面显示调试信息">
+                <Toggle v-if="!loading" :defaultValue="isDebug" @click="switchDebugMode" />
             </SettingCard>
         </scroller>
     </div>
@@ -37,7 +40,8 @@ export default {
         return {
             loading: true,
             isScroll: false,
-            isLarger: false
+            isLarger: false,
+            isDebug: false
         }
     },
     methods: {
@@ -52,12 +56,18 @@ export default {
             setting.isLargerFont().then(larger => {
                 this.isLarger = larger;
             });
+            setting.isDebugMode().then(debug => {
+                this.isDebug = debug;
+            });
         },
         switchMode(checked) {
             setting.setMode(checked ? 'scroll' : 'page')
         },
         switchFontSize(checked) {
             setting.setLargerFont(checked);
+        },
+        switchDebugMode(checked) {
+            setting.setDebugMode(checked);
         }
     }
 }

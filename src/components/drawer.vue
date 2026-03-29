@@ -1,6 +1,6 @@
 <template>
     <div class="wrapper">
-        <div class="mask" v-if="showDrawer" @click="closeDrawer" />
+        <div class="mask" v-show="showDrawer" @click="closeDrawer" />
         <div class="drawer" :class="{ 'drawer-open': showDrawer }">
             <slot />
         </div>

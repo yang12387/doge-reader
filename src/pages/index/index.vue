@@ -13,7 +13,7 @@
             <div class="content">
                 <div class="cards-area">
                     <text v-show="history.length === 0" class="loading" style="transform: translateY(22vh);">什么也没有喵...</text>
-                    <HistoryCard v-for="(item, index) in historyList" :key="index" :item="item"
+                    <HistoryCard v-for="(item, index) in historyList" :key="index"
                         :name="item.path.split('/').pop()" time="" @click="open(item.path, item.progress)" />
                 </div>
                 <MainButton class="main-button" :icon="require('../../assets/folder.png?base64')" text="本地文件"

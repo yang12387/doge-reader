@@ -1,6 +1,6 @@
 <h1 style="text-align:center">Doge 阅读器</h1>
 
-一款为有道词典笔 OS 设计的第三方阅读器器程序，使用 Vue.js 构建
+一款为有道词典笔 OS 设计的第三方阅读器程序，使用 Vue.js 构建
 
 ## 特性
 

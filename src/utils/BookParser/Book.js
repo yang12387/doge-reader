@@ -13,7 +13,7 @@ export default class Book {
         return this.text.slice(ch.start, ch.end);
     }
 
-    getChapterName(index) {
+    getChapterTitle(index) {
         if (index < 0 || index >= this.chapters.length) {
             return '';
         }

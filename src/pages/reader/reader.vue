@@ -30,8 +30,8 @@
         <Drawer v-if="!loading">
             <scroller style="height: 100%;" over-scroll="50px" over-fling="50px">
                 <text class="lower-title">章节</text>
-                <MenuCard :text="reader.book.getChapterName(index)" v-for="index in reader.book.getChapterCount() - 1"
-                    :key="index" :active="index === reader.chapterIndex" @click="loadChapter(index)" />
+                <MenuCard :text="reader.book.getChapterTitle(index - 1)" v-for="index in reader.book.getChapterCount()"
+                    :key="index" :active="index - 1 === reader.chapterIndex" @click="loadChapter(index - 1)" />
             </scroller>
         </Drawer>
         <Toast />
@@ -157,6 +157,7 @@ export default {
         loadChapter(index) {
             this.reader.go(index);
             $falcon.trigger('drawer', { show: false });
+            this.go('start');
         },
         onHide() {
             setting.addItem(this.$page.options.path, this.reader.getProgress())

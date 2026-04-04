@@ -15,6 +15,9 @@
 
 ## 预览
 
+![reader.jpg](https://cdn.mmoe.work/public/doge-reader/reader.jpg)
+![index.jpg](https://cdn.mmoe.work/public/doge-reader/index.jpg)
+
 ## 安装
 
 ### 直接安装

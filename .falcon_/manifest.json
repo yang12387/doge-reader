@@ -8,6 +8,10 @@
     "bigNum": false
   },
   "cert": {
+    "Setting-326c6764.js.bin": {
+      "size": 1888,
+      "md5": "475a84e007877a03b498dfd369e1ec33"
+    },
     "app.js.bin": {
       "size": 3610,
       "md5": "958eae5edd12e6de6fd29c9d3fba33fe"
@@ -19,10 +23,6 @@
     "delete-73cf201b.js.bin": {
       "size": 2157,
       "md5": "596e31b014671d341501eadab70661bb"
-    },
-    "Setting-326c6764.js.bin": {
-      "size": 1888,
-      "md5": "475a84e007877a03b498dfd369e1ec33"
     },
     "favorite.js.bin": {
       "size": 2470,

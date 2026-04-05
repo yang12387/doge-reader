@@ -15,9 +15,10 @@
 
 ## 预览
 
+![reader.png](https://cdn.mmoe.work/public/doge-reader/reader.png)
+![menu.png](https://cdn.mmoe.work/public/doge-reader/menu.png)
+![index.png](https://cdn.mmoe.work/public/doge-reader/index.png)
 ![example.png](https://cdn.mmoe.work/public/doge-reader/example.png)
-![reader.jpg](https://cdn.mmoe.work/public/doge-reader/reader.jpg)
-![index.jpg](https://cdn.mmoe.work/public/doge-reader/index.jpg)
 
 ## 安装
 

@@ -16,21 +16,17 @@
       "size": 3610,
       "md5": "958eae5edd12e6de6fd29c9d3fba33fe"
     },
-    "back-aa1a3b26.js.bin": {
-      "size": 2428,
-      "md5": "5b3103de9ee51e19683e56de7dd203cd"
+    "back-a7a4b9d0.js.bin": {
+      "size": 2924,
+      "md5": "1bea3ce9f156fefb5258d7a04ad86ef0"
     },
     "delete-73cf201b.js.bin": {
       "size": 2157,
       "md5": "596e31b014671d341501eadab70661bb"
     },
-    "favorite.js.bin": {
-      "size": 2470,
-      "md5": "4bac47b1e5075670ab8d770c9ed6a336"
-    },
     "filemanager.js.bin": {
-      "size": 14538,
-      "md5": "d73f2d6583841798217ffbc799f7c2cc"
+      "size": 11790,
+      "md5": "a129b6a14dd88a64e875a4a701346d67"
     },
     "history-card-83d1effb.js.bin": {
       "size": 1143,
@@ -38,27 +34,31 @@
     },
     "history.js.bin": {
       "size": 2458,
-      "md5": "df0221693df867b3a167cafff58ba778"
+      "md5": "0f16ac8cde154399db856c74f4ceea63"
     },
     "index.js.bin": {
       "size": 31540,
-      "md5": "891ed5a31202a9a9d8909b195c24024f"
+      "md5": "c7ad72f10acc4e5d13f0cb29926239ea"
+    },
+    "favorite.js.bin": {
+      "size": 2470,
+      "md5": "12e6ad6c08556ef02ee425c6576fe3cd"
     },
     "info.js.bin": {
       "size": 698789,
-      "md5": "da364d548adb298d34a0b23a3c9d7a8d"
-    },
-    "license.js.bin": {
-      "size": 1835,
-      "md5": "05c10e9b34cee9114d59f5ad97224019"
+      "md5": "fe1bb0af7245eb1fc66f1929cd6caa82"
     },
     "reader.js.bin": {
       "size": 18518,
-      "md5": "9a27278bb3ae3d722040533131f07b5b"
+      "md5": "2c5f4f9b84cfc45decb45eff7fe0250b"
+    },
+    "license.js.bin": {
+      "size": 1835,
+      "md5": "1d54f2d34f854e729cc795ba8024f7a8"
     },
     "setting.js.bin": {
       "size": 4573,
-      "md5": "b6574bf8d3ffa1b28a603f904bbf27d6"
+      "md5": "8ca57852a3dc018c6b4f3ed19ec6d027"
     },
     "assets/license.txt": {
       "size": 34523,

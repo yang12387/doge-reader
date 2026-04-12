@@ -1,6 +1,6 @@
 {
   "appName": "Doge阅读",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "appid": "8001145141919811",
   "icon": "app_icon.png",
   "quickjs": {
@@ -14,7 +14,7 @@
     },
     "app.js.bin": {
       "size": 3610,
-      "md5": "958eae5edd12e6de6fd29c9d3fba33fe"
+      "md5": "5a9a2918c83203e62086da9a213f8d56"
     },
     "back-a7a4b9d0.js.bin": {
       "size": 2924,
@@ -23,6 +23,10 @@
     "delete-73cf201b.js.bin": {
       "size": 2157,
       "md5": "596e31b014671d341501eadab70661bb"
+    },
+    "favorite.js.bin": {
+      "size": 2470,
+      "md5": "12e6ad6c08556ef02ee425c6576fe3cd"
     },
     "filemanager.js.bin": {
       "size": 11790,
@@ -40,21 +44,17 @@
       "size": 31540,
       "md5": "c7ad72f10acc4e5d13f0cb29926239ea"
     },
-    "favorite.js.bin": {
-      "size": 2470,
-      "md5": "12e6ad6c08556ef02ee425c6576fe3cd"
-    },
     "info.js.bin": {
       "size": 698789,
       "md5": "fe1bb0af7245eb1fc66f1929cd6caa82"
     },
-    "reader.js.bin": {
-      "size": 18518,
-      "md5": "2c5f4f9b84cfc45decb45eff7fe0250b"
-    },
     "license.js.bin": {
       "size": 1835,
       "md5": "1d54f2d34f854e729cc795ba8024f7a8"
+    },
+    "reader.js.bin": {
+      "size": 18518,
+      "md5": "2c5f4f9b84cfc45decb45eff7fe0250b"
     },
     "setting.js.bin": {
       "size": 4573,

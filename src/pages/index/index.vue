@@ -18,7 +18,7 @@
                 </div>
                 <MainButton class="main-button" :icon="require('../../assets/folder.png?base64')" text="本地文件"
                     :color="['#004a77', '#c2e7ff']" @click="openLink('filemanager')" />
-                <MainButton class="main-button" :icon="require('../../assets/heart.png?base64')" text="书签"
+                <MainButton class="main-button" :icon="require('../../assets/bookmark.png?base64')" text="书签"
                     :color="['#7a0f1c', '#ffd6db']" @click="openLink('favorite')" />
             </div>
         </div>

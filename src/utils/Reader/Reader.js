@@ -126,9 +126,9 @@ export default class Reader {
         this.go(this.chapterIndex - 1);
     }
 
-    getOffsetY() { return this.offsetY; }
-    setOffsetY(y) { this.offsetY = y; }
+    getOffsetY() { return this.offsetY * this.lineHeight; }
+    setOffsetY(y) { this.offsetY = Math.floor(y / this.lineHeight); }
 
-    getProgress() { return { chapterIndex: this.chapterIndex, offset: this.offset, offsetY: this.offsetY, lineHeight: this.lineHeight }; }
-    setProgress(p) { if (!p) return; this.go(p.chapterIndex || 0, p.offset || 0, this.lineHeight === p.lineHeight ? p.offsetY || 0 : 0); }
+    getProgress() { return { chapterIndex: this.chapterIndex, offset: this.offset, offsetY: this.offsetY }; }
+    setProgress(p) { if (!p) return; this.go(p.chapterIndex || 0, p.offset || 0, p.offsetY || 0); }
 }

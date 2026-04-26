@@ -35,7 +35,8 @@
             </scroller>
         </Drawer>
         <Toast />
-        <div v-if="isDebug" style="position: absolute; top: 0; right: 0; padding: 0; background-color: #000000; opacity: 0.7;">
+        <div v-if="isDebug"
+            style="position: absolute; top: 0; right: 0; padding: 0; background-color: #000000; opacity: 0.7;">
             <text style="font-size: 6vh; color: white;">
                 mode: {{ reader.mode }},
                 fontSize: {{ reader.fontSize }},
@@ -111,9 +112,8 @@ export default {
         this.loading = false;
 
         if (this.reader.mode === 'scroll') {
-            this.go('start', this.reader.getOffsetY()).then(() => {
-                this.isListeningScroll = true;
-            })
+            await this.go('start', this.reader.getOffsetY() + 0.38 * h);
+            this.isListeningScroll = true;
         }
     },
     methods: {
@@ -152,7 +152,7 @@ export default {
         },
         setOffsetY(event) {
             if (this.reader.mode !== 'scroll' || !this.isListeningScroll) return;
-            this.reader.setOffsetY(event.contentOffset.y);
+            this.reader.setOffsetY(event.contentOffset.y - 0.38 * h);
         },
         loadChapter(index) {
             this.reader.go(index);

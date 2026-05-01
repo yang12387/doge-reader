@@ -20,9 +20,9 @@ import ButtonColumn from "../../components/button-column.vue";
 import HistoryCard from "../../components/history-card.vue";
 import IconButton from "../../components/icon-button.vue";
 
-import Setting from "../../utils/Setting/Setting.js";
+import Storage from "../../utils/Storage/Storage.js";
 
-const setting = new Setting();
+const storage = new Storage();
 
 export default {
     name: 'History',
@@ -41,7 +41,7 @@ export default {
             this.$page.finish();
         },
         clear() {
-            setting.clearItems().then(() => {
+            storage.clearItems().then(() => {
                 this.history = [];
             });
         },
@@ -49,7 +49,7 @@ export default {
             $falcon.navTo('reader', { path, progress: JSON.stringify(progress) });
         },
         onShow() {
-            setting.getAllItems().then(items => {
+            storage.getAllItems().then(items => {
                 this.history = items;
             });
         }

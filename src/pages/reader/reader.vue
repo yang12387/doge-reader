@@ -64,9 +64,9 @@ import Toast from "../../components/toast.vue";
 
 import BookParser from '../../utils/BookParser/BookParser.js';
 import Reader from "../../utils/Reader/Reader.js";
-import Setting from "../../utils/Setting/Setting.js";
+import Storage from "../../utils/Storage/Storage.js";
 
-const setting = new Setting();
+const storage = new Storage();
 
 export default {
     name: 'reader',
@@ -90,11 +90,11 @@ export default {
         const parser = new BookParser(this.$page.options.path);
         const book = await parser.load();
 
-        this.isLarger = await setting.isLargerFont();
-        this.isDebug = await setting.isDebugMode();
+        this.isLarger = await storage.get('isLarger');
+        this.isDebug = await storage.get('isDebug');
 
         this.reader = new Reader(book, {
-            mode: await setting.getMode() || 'page',
+            mode: await storage.get('mode') || 'page',
             fontSize: this.isLarger ? 12 : 10,
             lineHeight: this.isLarger ? 16 : 14,
             viewportWidth: w - 0.39 * h,
@@ -104,8 +104,8 @@ export default {
         if (this.$page.options.progress) {
             this.reader.setProgress(JSON.parse(this.$page.options.progress));
         } else {
-            if (await setting.getItem(this.$page.options.path)) {
-                this.reader.setProgress(await setting.getItem(this.$page.options.path));
+            if (await storage.getItem(this.$page.options.path)) {
+                this.reader.setProgress(await storage.getItem(this.$page.options.path));
             }
         }
 
@@ -121,7 +121,7 @@ export default {
             this.$page.finish();
         },
         love() {
-            setting.addItem(this.$page.options.path, this.reader.getProgress(), 'favorite').then(() => {
+            storage.addItem(this.$page.options.path, this.reader.getProgress(), 'favorite').then(() => {
                 $falcon.trigger('toast', { text: '书签已保存' });
             });
         },
@@ -160,7 +160,7 @@ export default {
             this.go('start');
         },
         onHide() {
-            setting.addItem(this.$page.options.path, this.reader.getProgress())
+            storage.addItem(this.$page.options.path, this.reader.getProgress())
         },
     }
 }

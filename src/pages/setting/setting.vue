@@ -24,9 +24,9 @@ import IconButton from "../../components/icon-button.vue";
 import SettingCard from "../../components/setting-card.vue";
 import Toggle from "../../components/toggle.vue";
 
-import Setting from "../../utils/Setting/Setting.js";
+import Storage from "../../utils/Storage/Storage";
 
-const setting = new Setting();
+const storage = new Storage();
 
 export default {
     name: 'setting',
@@ -44,30 +44,24 @@ export default {
             isDebug: false
         }
     },
+    async created() {
+        this.isScroll = await storage.get('mode') === 'scroll';
+        this.isLarger = await storage.get('isLarger');
+        this.isDebug = await storage.get('isDebug');
+        this.loading = false;
+    },
     methods: {
         back() {
             this.$page.finish();
         },
-        onShow() {
-            setting.getMode().then(mode => {
-                this.isScroll = mode === 'scroll';
-                this.loading = false;
-            });
-            setting.isLargerFont().then(larger => {
-                this.isLarger = larger;
-            });
-            setting.isDebugMode().then(debug => {
-                this.isDebug = debug;
-            });
-        },
         switchMode(checked) {
-            setting.setMode(checked ? 'scroll' : 'page')
+            storage.set('mode', checked ? 'scroll' : 'page');
         },
         switchFontSize(checked) {
-            setting.setLargerFont(checked);
+            storage.set('isLarger', checked);
         },
         switchDebugMode(checked) {
-            setting.setDebugMode(checked);
+            storage.set('isDebug', checked);
         }
     }
 }

@@ -1,5 +1,11 @@
 import storage from 'storage';
 
+const defaultSetting = {
+    mode: 'page',
+    isLarger: false,
+    isDebug: false,
+};
+
 function getNow() {
     const now = new Date();
 
@@ -13,7 +19,7 @@ function getNow() {
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
 
-export default class Setting {
+export default class Storage {
     async _get(key) {
         try {
             const value = await storage.getStorage(key);
@@ -32,32 +38,32 @@ export default class Setting {
         }
     }
 
-    async addItem(path, progress, target = 'history') {
+    async addItem(node, progress, target = 'history') {
         let history = await this._get(target);
         if (!history) {
             history = [];
         }
 
         if (target === 'history') {
-            history = history.filter(item => item.path !== path);
+            history = history.filter(item => item.node.path !== node.path);
         }
-        history.push({ path, progress, time: getNow() });
+        history.push({ node, progress, time: getNow() });
 
         await this._set(target, history);
     }
 
-    async getItem(path, target = 'history') {
+    async getItem(node, target = 'history') {
         let history = await this._get(target);
         if (!history) {
             return null;
         }
 
-        const item = history.find(item => item.path === path);
+        const item = history.find(item => item.node.path === node.path);
         if (!item) {
             return null;
         }
 
-        return item.progress
+        return item.progress;
     }
 
     async clearItems(target = 'history') {
@@ -73,48 +79,21 @@ export default class Setting {
         return history;
     }
 
-    async setMode(mode) {
-        if (mode === 'page' || mode === 'scroll') {
-            await this._set('mode', mode);
+    async set(key, value) {
+        if (key in defaultSetting) {
+            await this._set(key, value);
         }
     }
 
-    async getMode() {
-        if (await this._get('mode')) {
-            return await this._get('mode');
-        } else {
-            await this._set('mode', 'page');
-            return 'page';
-        }
-    }
-
-    async setLargerFont(isLarger) {
-        if (isLarger === true || isLarger === false) {
-            await this._set('isLarger', isLarger);
-        }
-    }
-
-    async isLargerFont() {
-        if (await this._get('isLarger') === null) {
-            await this._set('isLarger', false);
-            return false;
-        } else {
-            return await this._get('isLarger');
-        }
-    }
-
-    async setDebugMode(isDebug) {
-        if (isDebug === true || isDebug === false) {
-            await this._set('isDebug', isDebug);
-        }
-    }
-
-    async isDebugMode() {
-        if (await this._get('isDebug') === null) {
-            await this._set('isDebug', false);
-            return false;
-        } else {
-            return await this._get('isDebug');
+    async get(key) {
+        if (key in defaultSetting) {
+            const value = await this._get(key);
+            if (value !== null) {
+                return value;
+            } else {
+                await this._set(key, defaultSetting[key]);
+                return defaultSetting[key];
+            }
         }
     }
 }

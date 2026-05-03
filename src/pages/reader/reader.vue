@@ -118,7 +118,9 @@ export default {
     },
     methods: {
         back() {
-            this.$page.finish();
+            storage.addItem(this.$page.options.path, this.reader.getProgress()).then(() => {
+                this.$page.finish();
+            });
         },
         love() {
             storage.addItem(this.$page.options.path, this.reader.getProgress(), 'favorite').then(() => {
@@ -159,8 +161,17 @@ export default {
             $falcon.trigger('drawer', { show: false });
             this.go('start');
         },
+        onShow() {
+            this._backpressed = () => {
+                this.back();
+            }
+
+            this.$page.$npage.setSupportBack(false);
+            this.$page.$npage.on("backpressed", this._backpressed);
+        },
         onHide() {
-            storage.addItem(this.$page.options.path, this.reader.getProgress())
+            this.$page.$npage.setSupportBack(true);
+            this.$page.$npage.off("backpressed", this._backpressed);
         },
     }
 }

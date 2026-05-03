@@ -1,6 +1,6 @@
 {
   "appName": "Doge阅读",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "appid": "8001145141919811",
   "icon": "app_icon.png",
   "quickjs": {
@@ -14,7 +14,7 @@
     },
     "app.js.bin": {
       "size": 3610,
-      "md5": "606d24baf4d87b3ca7efaca6e1a50920"
+      "md5": "09f489e061dbdaee8518ca47bbb8fe52"
     },
     "back-a7a4b9d0.js.bin": {
       "size": 2924,
@@ -53,8 +53,8 @@
       "md5": "1d54f2d34f854e729cc795ba8024f7a8"
     },
     "reader.js.bin": {
-      "size": 18507,
-      "md5": "b934929c1227604345bdc25f4d09f553"
+      "size": 18764,
+      "md5": "6d34ce97f19ccf527fe4aed5debbd8fa"
     },
     "setting.js.bin": {
       "size": 4432,

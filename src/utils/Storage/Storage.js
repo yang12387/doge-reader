@@ -38,27 +38,27 @@ export default class Storage {
         }
     }
 
-    async addItem(node, progress, target = 'history') {
+    async addItem(path, progress, target = 'history') {
         let history = await this._get(target);
         if (!history) {
             history = [];
         }
 
         if (target === 'history') {
-            history = history.filter(item => item.node.path !== node.path);
+            history = history.filter(item => item.path !== path);
         }
-        history.push({ node, progress, time: getNow() });
+        history.push({ path, progress, time: getNow() });
 
         await this._set(target, history);
     }
 
-    async getItem(node, target = 'history') {
+    async getItem(path, target = 'history') {
         let history = await this._get(target);
         if (!history) {
             return null;
         }
 
-        const item = history.find(item => item.node.path === node.path);
+        const item = history.find(item => item.path === path);
         if (!item) {
             return null;
         }

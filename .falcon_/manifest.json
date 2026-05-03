@@ -8,9 +8,9 @@
     "bigNum": false
   },
   "cert": {
-    "Storage-1dd76f23.js.bin": {
-      "size": 1554,
-      "md5": "3b4b4dcc29fa3d38ff223a271bdbd6f1"
+    "Storage-041a4726.js.bin": {
+      "size": 1529,
+      "md5": "ea22ec1e55fe94c977a7fd2be04baf4c"
     },
     "app.js.bin": {
       "size": 3610,
@@ -26,7 +26,7 @@
     },
     "favorite.js.bin": {
       "size": 2470,
-      "md5": "942ecb1169ee65830c853534e4b39edc"
+      "md5": "3d7f877f02ef72f3cc54c6d336b52f83"
     },
     "filemanager.js.bin": {
       "size": 11790,
@@ -38,11 +38,11 @@
     },
     "history.js.bin": {
       "size": 2458,
-      "md5": "c50258d570d9d0f92dfd299f5f4cb454"
+      "md5": "c01de6b3cd7559811f7e0a0daf52ee19"
     },
     "index.js.bin": {
       "size": 26312,
-      "md5": "d0da861225e316185d24167ee0842ff2"
+      "md5": "b4d0ddd65f3fda6bff89c02bb2b026f9"
     },
     "info.js.bin": {
       "size": 698786,
@@ -54,11 +54,11 @@
     },
     "reader.js.bin": {
       "size": 18764,
-      "md5": "6d34ce97f19ccf527fe4aed5debbd8fa"
+      "md5": "8a75599c1e1d8953fef2cc3bcd9ee120"
     },
     "setting.js.bin": {
       "size": 4432,
-      "md5": "f968df4b83c7c7743384e2f9944c0adf"
+      "md5": "c329224e0602397d8c2eab222800d9dc"
     },
     "assets/license.txt": {
       "size": 34523,

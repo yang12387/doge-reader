@@ -120,7 +120,7 @@ export default {
         back() {
             storage.addItem(this.$page.options.path, this.reader.getProgress()).then(() => {
                 this.$page.finish();
-            });
+            })
         },
         love() {
             storage.addItem(this.$page.options.path, this.reader.getProgress(), 'favorite').then(() => {

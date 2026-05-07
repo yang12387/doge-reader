@@ -1,0 +1,44 @@
+<template>
+    <div class="wrapper" @click="$emit('click')">
+        <text class="name">{{ name }}</text>
+        <text class="time">{{ time }}</text>
+    </div>
+</template>
+
+<script>
+export default {
+    name: "HistoryCard",
+    props: {
+        name: { type: String, required: true },
+        time: { type: String, required: true },
+    },
+};
+</script>
+
+<style lang="less" scoped>
+@import "../styles/md-color.less";
+
+.wrapper {
+    height: 30vh;
+    background-color: @neutral;
+    border-radius: 6vh;
+    padding: 3vh 10vh;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+}
+
+.wrapper:active {
+    opacity: 0.6;
+}
+
+.name {
+    font-size: 10vh;
+    color: @on-neutral;
+}
+
+.time {
+    font-size: 8vh;
+    color: @outline;
+}
+</style>

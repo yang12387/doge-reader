@@ -12,13 +12,14 @@
 - 阅读进度自动保存
 - 书签设置支持
 - 字体调节支持
+- 解决在我的A6pro上黑屏的问题
 
 ## 预览
 
-![reader.png](https://cdn.mmoe.work/public/doge-reader/reader.png)
-![menu.png](https://cdn.mmoe.work/public/doge-reader/menu.png)
-![index.png](https://cdn.mmoe.work/public/doge-reader/index.png)
-![example.png](https://cdn.mmoe.work/public/doge-reader/example.png)
+![reader.png](images/reader.png)
+![menu.png](images/menu.png)
+![index.png](images/index.png)
+![settings.png](images/settings.png)
 
 ## 安装
 
@@ -74,9 +75,13 @@ npm run build:prod
 
 ## 关于
 
-作者：adogecheems  
+原作者：adogecheems  
 许可证：AGPLv3
 
 "Doge" 是“词典笔 OS 通用生态系统”的意思 (Dictpen OS Generic Ecosystem) 🐶
 
 如果对你有什么帮助，请给我一个 star ⭐️～
+
+## 许可证
+
+本项目整体以 [AGPLv3](LICENSE) 发布，同时本项目使用了 [Pentool](https://github.com/penosext/miniapp) 的部分代码，以 [GPL-3.0](jsapi/LICENSE) 授权
